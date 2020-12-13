@@ -22,7 +22,18 @@
   },
 
   // Add the IDs of extensions you want installed when the container is created.
-  "extensions": []
+  "extensions": [
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "eg2.vscode-npm-script",
+    "formulahendry.auto-rename-tag",
+    "nucllear.vscode-extension-auto-import",
+    "dsznajder.es7-react-js-snippets",
+    "prisma.prisma",
+    "ashinzekene.nestjs",
+    "abhijoybasak.nestjs-files"
+  ]
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
