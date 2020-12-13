@@ -4,9 +4,10 @@ services:
     build: .
     volumes:
       - ./:/usr/app
-    command: 'npm run start:dev'
+    command: 'sh ./prisma/start.sh'
     ports:
       - '3000:3000'
+      - '5555:5555'
     tty: true
     depends_on:
       - db
