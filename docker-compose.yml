@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  server:
+    build: .
+    volumes:
+      - ./:/usr/app
+    command: 'npm run start:dev'
+    ports:
+      - '3000:3000'
+    tty: true
