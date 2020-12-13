@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: Ubuntu-20.04
     strategy:
       matrix:
         ## 現状stableが12系なので10,14系のテストは不要
