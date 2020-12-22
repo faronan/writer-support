@@ -1,5 +1,13 @@
 version: '3.8'
 services:
+  client:
+    build: .
+    volumes:
+      - ./:/usr/app
+    command: 'npm run dev:client'
+    ports:
+      - '3000:3000'
+    tty: true
   server:
     build: .
     volumes:
