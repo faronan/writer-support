@@ -6,8 +6,8 @@ services:
       - ./:/usr/app
     command: 'sh ./prisma/start.sh'
     ports:
-      - '3000:3000'
       - '5555:5555'
+      - '8888:8888'
     tty: true
     depends_on:
       - db
