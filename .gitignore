@@ -36,3 +36,11 @@ lerna-debug.log*
 # Prisma
 .env
 mysql/
+
+# next.js
+/.next/
+/out/
+
+# dependencies
+/.pnp
+.pnp.js
