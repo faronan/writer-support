@@ -12,7 +12,7 @@ services:
     build: .
     volumes:
       - ./:/usr/app
-    command: 'sh ./prisma/start.sh'
+    command: 'sh ./docker/server_start.sh'
     ports:
       - '5555:5555'
       - '8888:8888'
