@@ -3,7 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "lerna run build --stream",
+    "build:server": "lerna run build --scope=server --stream",
+    "dev": "lerna run dev --stream",
+    "dev:server": "lerna run dev --scope=server --stream",
+    "start": "lerna run start --stream",
+    "start:server": "lerna run start --scope=server --stream",
+    "lint": "lerna run lint --stream",
+    "lint:server": "lerna run lint --scope=server --stream",
+    "test": "lerna run test --stream",
+    "test:server": "lerna run test --scope=server --stream"
   },
   "dependencies": {
     "lerna": "^3.22.1"
