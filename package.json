@@ -9,12 +9,19 @@
     "dev:server": "lerna run dev --scope=server --stream",
     "start": "lerna run start --stream",
     "start:server": "lerna run start --scope=server --stream",
-    "lint": "lerna run lint --stream",
-    "lint:server": "lerna run lint --scope=server --stream",
+    "lint": "eslint --ext .ts,.tsx",
     "test": "lerna run test --stream",
     "test:server": "lerna run test --scope=server --stream"
   },
   "dependencies": {
     "lerna": "^3.22.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.11.0",
+    "@typescript-eslint/parser": "^4.11.0",
+    "eslint": "^7.16.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-react": "^7.21.5"
   }
 }
