@@ -1,5 +1,16 @@
 version: '3.8'
 services:
+  front:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.front
+    volumes:
+      - ./:/usr/app
+    working_dir: '/usr/app/packages/front'
+    command: 'npm run dev'
+    ports:
+      - '3000:3000'
+    tty: true
   server:
     build:
       context: .
