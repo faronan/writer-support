@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "ci": "lerna exec npm ci",
     "build": "lerna run build --stream",
     "build:server": "lerna run build --scope=server --stream",
     "dev": "lerna run dev --stream",

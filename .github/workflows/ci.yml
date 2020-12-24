@@ -22,6 +22,7 @@ jobs:
           restore-keys: |
             node-
       - run: npm ci
+      - run: npm run ci
       - run: npm run lint
       - run: npm run test
       - run: npm run build
