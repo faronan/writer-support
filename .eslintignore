@@ -1,2 +1,2 @@
-src/models
-src/resolvers
+packages/server/src/models
+packages/server/src/resolvers
