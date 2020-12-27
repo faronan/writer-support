@@ -6,3 +6,20 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model ProofreadingData {
+  dataId Int @id @default(autoincrement())
+  text   String
+  rules  LintRule[]
+  result LintResult[]
+}
+model LintRule {
+  ruleId  String @unique
+  isValid Boolean
+}
+model LintResult {
+  resultId Int @id @default(autoincrement())
+  message  String
+  line     Int
+  column   Int
+}

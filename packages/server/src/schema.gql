@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type LintRule {
+  ruleId: String!
+  isValid: Boolean!
+}
+
+type LintResult {
+  resultId: Int!
+  message: String!
+  line: Int!
+  column: Int!
+}
+
+type ProofreadingData {
+  dataId: Int!
+  text: String!
+  rules: LintRule!
+  result: LintResult!
+}
+
+type Query {
+  proofreadingDatas: [ProofreadingData!]!
+}
+
+type Mutation {
+  createProofreading(text: String!): ProofreadingData!
+}
