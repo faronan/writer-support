@@ -1,7 +1,12 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import styles from '@/styles/Home.module.css';
+import { useQuery } from '@apollo/client';
+import { ProofreadingDatasDocument } from '@graphql/graphql-operations';
 
 export default function Home() {
+  const result = useQuery(ProofreadingDatasDocument);
+  //TODO: 確認用、後で削除
+  console.log(result);
   return (
     <div className={styles.container}>
       <Head>
@@ -61,5 +66,5 @@ export default function Home() {
         </a>
       </footer>
     </div>
-  )
+  );
 }
