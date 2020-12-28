@@ -1,0 +1,6 @@
+query proofreadingDatas {
+  proofreadingDatas {
+    dataId
+    text
+  }
+}
