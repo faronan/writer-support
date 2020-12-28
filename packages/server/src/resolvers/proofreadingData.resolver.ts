@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ProofreadingData } from '../models/proofreadingData.model';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../services/prisma.service';
 
 @Resolver((of) => ProofreadingData)
 export class ProofreadingDataResolver {

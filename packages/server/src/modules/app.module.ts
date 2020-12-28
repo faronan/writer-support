@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
-import { PrismaService } from './prisma.service';
-import { ProofreadingDataResolver } from './resolvers/proofreadingData.resolver';
+import { PrismaService } from '@/services/prisma.service';
+import { ProofreadingDataResolver } from '@/resolvers/proofreadingData.resolver';
 
 @Module({
   imports: [
