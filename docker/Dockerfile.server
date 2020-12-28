@@ -5,3 +5,4 @@ COPY ./packages/server/package*.json ./
 RUN npm ci
 
 COPY . .
+EXPOSE 5555 8888
