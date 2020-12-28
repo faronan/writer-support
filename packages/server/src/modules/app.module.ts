@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
-import { PrismaService } from '@/services/prisma.service';
-import { ProofreadingDataResolver } from '@/resolvers/proofreadingData.resolver';
+import { ProofreadingDataModule } from '@/modules/proofreadingData.module';
 
 @Module({
   imports: [
+    ProofreadingDataModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       debug: true,
@@ -13,6 +13,6 @@ import { ProofreadingDataResolver } from '@/resolvers/proofreadingData.resolver'
     }),
   ],
   controllers: [],
-  providers: [PrismaService, ProofreadingDataResolver],
+  providers: [],
 })
 export class AppModule {}
