@@ -7,6 +7,7 @@ const config: Config.InitialOptions = {
     '\\.(css|scss)$': 'identity-obj-proxy',
     '^@/(.+)': '<rootDir>/src/$1',
     '^@test/(.+)': '<rootDir>/test/$1',
+    '^@graphql/(.+)': '<rootDir>/graphql/$1',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$'],
