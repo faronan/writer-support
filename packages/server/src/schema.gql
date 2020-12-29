@@ -4,21 +4,20 @@
 
 type LintRule {
   ruleId: String!
-  isValid: Boolean!
 }
 
 type LintResult {
-  resultId: Int!
+  resultId: ID!
   message: String!
-  line: Int!
-  column: Int!
+  line: Float!
+  column: Float!
 }
 
 type ProofreadingData {
-  dataId: Int!
+  dataId: ID!
   text: String!
-  rules: LintRule!
-  result: LintResult!
+  rules: [LintRule!]!
+  result: [LintResult!]!
 }
 
 type Query {

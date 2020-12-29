@@ -15,7 +15,6 @@ model ProofreadingData {
 }
 model LintRule {
   ruleId  String @unique
-  isValid Boolean
 }
 model LintResult {
   resultId Int @id @default(autoincrement())

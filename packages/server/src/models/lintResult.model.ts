@@ -1,13 +1,10 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 
 @ObjectType()
 export class LintResult {
-  @Field((_type) => Int)
+  @Field((_type) => ID)
   resultId: number;
-  @Field((_type) => String)
   message: string;
-  @Field((_type) => Int)
   line: number;
-  @Field((_type) => Int)
   column: number;
 }
