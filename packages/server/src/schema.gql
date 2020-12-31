@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type LintRule {
-  ruleId: String!
+  ruleName: String!
 }
 
 type LintResult {
@@ -25,5 +25,10 @@ type Query {
 }
 
 type Mutation {
-  createProofreading(text: String!): ProofreadingData!
+  createProofreading(proofreading: AddProofreadingDataInput!): ProofreadingData!
+}
+
+input AddProofreadingDataInput {
+  text: String!
+  ruleNames: [String!]!
 }

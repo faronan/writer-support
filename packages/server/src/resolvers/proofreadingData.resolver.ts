@@ -1,20 +1,24 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { ProofreadingData } from '../models/proofreadingData.model';
-import { PrismaService } from '../services/prisma.service';
+import { ProofreadingData } from '@/models/proofreadingData.model';
+import { ProofreadingDataService } from '@/services/proofreadingData.service';
+import { AddProofreadingDataInput } from '@/dto/proofreadingData.dto';
 
 @Resolver((of) => ProofreadingData)
 export class ProofreadingDataResolver {
-  constructor(private prisma: PrismaService) {}
+  constructor(private ProofreadingDataService: ProofreadingDataService) {}
 
   @Query((returns) => [ProofreadingData])
   async proofreadingDatas() {
-    return this.prisma.proofreadingData.findMany();
+    return this.ProofreadingDataService.findMany();
   }
 
   @Mutation((returns) => ProofreadingData)
   async createProofreading(
-    @Args({ name: 'text', type: () => String }) text: string,
+    @Args('proofreading') proofreading: AddProofreadingDataInput,
   ) {
-    return this.prisma.proofreadingData.create({ data: { text: text } });
+    return this.ProofreadingDataService.create(
+      proofreading.text,
+      proofreading.ruleNames,
+    );
   }
 }

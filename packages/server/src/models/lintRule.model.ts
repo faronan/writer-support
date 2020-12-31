@@ -2,6 +2,6 @@ import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
 export class LintRule {
-  @Field()
-  ruleId: string;
+  @Field((_type) => String)
+  ruleName: string;
 }

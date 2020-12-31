@@ -13,9 +13,11 @@ model ProofreadingData {
   rules  LintRule[]
   result LintResult[]
 }
+
 model LintRule {
-  ruleId  String @unique
+  ruleName  String @unique
 }
+
 model LintResult {
   resultId Int @id @default(autoincrement())
   message  String
