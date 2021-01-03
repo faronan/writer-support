@@ -15,9 +15,9 @@ type LintResult {
 
 type ProofreadingData {
   dataId: ID!
+  rules: [LintRule!]
+  result: [LintResult!]
   text: String!
-  rules: [LintRule!]!
-  result: [LintResult!]!
 }
 
 type Query {

@@ -1,20 +1,16 @@
-import { LintRule } from '@/models/lintRule.model';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class LintRuleService {
-  async formatForPrisma(rules: LintRule[]) {
+  async create(ruleNames: string[]) {
     const dict = {
-      connectOrCreate: [
-        {
-          where: { ruleId: 'hoge' },
-          create: { ruleId: 'hoge' },
-        },
-        {
-          where: { ruleId: 'huga' },
-          create: { ruleId: 'huga' },
-        },
-      ],
+      connectOrCreate: ruleNames.reduce(
+        (obj, name) =>
+          obj.concat([
+            { where: { ruleName: name }, create: { ruleName: name } },
+          ]),
+        [],
+      ),
     };
     return await dict;
   }

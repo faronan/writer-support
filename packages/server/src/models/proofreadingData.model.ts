@@ -7,6 +7,8 @@ export class ProofreadingData {
   @Field((_type) => ID)
   dataId: number;
   text: string;
-  rules: LintRule[];
-  result: LintResult[];
+  @Field((_type) => [LintRule],{ nullable: true })
+  rules?: LintRule[];
+  @Field((_type) => [LintResult],{ nullable: true })
+  result?: LintResult[];
 }
