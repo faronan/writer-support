@@ -12,7 +12,12 @@ export class ProofreadingDataService {
   ) {}
 
   async findMany() {
-    return this.prismaService.proofreadingData.findMany();
+    return this.prismaService.proofreadingData.findMany({
+      include: {
+        rules: true,
+        result: true,
+      },
+    });
   }
 
   async create(text: string, ruleNames: string[]) {
