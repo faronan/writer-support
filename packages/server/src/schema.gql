@@ -3,22 +3,21 @@
 # ------------------------------------------------------
 
 type LintRule {
-  ruleId: String!
-  isValid: Boolean!
+  ruleName: String!
 }
 
 type LintResult {
-  resultId: Int!
+  resultId: ID!
   message: String!
-  line: Int!
-  column: Int!
+  line: Float!
+  column: Float!
 }
 
 type ProofreadingData {
-  dataId: Int!
+  dataId: ID!
+  rules: [LintRule!]
+  result: [LintResult!]
   text: String!
-  rules: LintRule!
-  result: LintResult!
 }
 
 type Query {
@@ -26,5 +25,10 @@ type Query {
 }
 
 type Mutation {
-  createProofreading(text: String!): ProofreadingData!
+  createProofreading(proofreading: AddProofreadingDataInput!): ProofreadingData!
+}
+
+input AddProofreadingDataInput {
+  text: String!
+  ruleNames: [String!]!
 }

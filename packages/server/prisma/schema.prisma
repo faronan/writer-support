@@ -13,13 +13,18 @@ model ProofreadingData {
   rules  LintRule[]
   result LintResult[]
 }
+
 model LintRule {
-  ruleId  String @unique
-  isValid Boolean
+  ruleName  String @unique
+  proofreadingData ProofreadingData? @relation(fields: [proofreadingDataId], references: [dataId])
+  proofreadingDataId Int?
 }
+
 model LintResult {
   resultId Int @id @default(autoincrement())
   message  String
   line     Int
   column   Int
+  proofreadingData ProofreadingData? @relation(fields: [proofreadingDataId], references: [dataId])
+  proofreadingDataId Int?
 }
