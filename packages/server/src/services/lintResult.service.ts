@@ -28,6 +28,6 @@ export class LintResultService {
         [],
       ),
     };
-    return await dict;
+    return dict;
   }
 }

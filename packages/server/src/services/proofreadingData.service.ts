@@ -12,7 +12,7 @@ export class ProofreadingDataService {
   ) {}
 
   async findMany() {
-    return this.prismaService.proofreadingData.findMany({
+    return await this.prismaService.proofreadingData.findMany({
       include: {
         rules: true,
         result: true,
@@ -23,7 +23,7 @@ export class ProofreadingDataService {
   async create(text: string, ruleNames: string[]) {
     const rules = await this.ruleService.create(ruleNames);
     const result = await this.resultService.create(text, ruleNames);
-    return this.prismaService.proofreadingData.create({
+    return await this.prismaService.proofreadingData.create({
       data: { text: text, rules: rules, result: result },
     });
   }

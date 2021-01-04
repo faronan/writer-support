@@ -9,6 +9,6 @@ export class LintRuleService {
         [],
       ),
     };
-    return await dict;
+    return dict;
   }
 }

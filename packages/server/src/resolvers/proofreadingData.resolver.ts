@@ -9,14 +9,14 @@ export class ProofreadingDataResolver {
 
   @Query((returns) => [ProofreadingData])
   async proofreadingDatas() {
-    return this.ProofreadingDataService.findMany();
+    return await this.ProofreadingDataService.findMany();
   }
 
   @Mutation((returns) => ProofreadingData)
   async createProofreading(
     @Args('proofreading') proofreading: AddProofreadingDataInput,
   ) {
-    return this.ProofreadingDataService.create(
+    return await this.ProofreadingDataService.create(
       proofreading.text,
       proofreading.ruleNames,
     );
