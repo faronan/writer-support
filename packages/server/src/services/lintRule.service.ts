@@ -4,11 +4,8 @@ import { Injectable } from '@nestjs/common';
 export class LintRuleService {
   async create(ruleNames: string[]) {
     const dict = {
-      connectOrCreate: ruleNames.reduce(
-        (obj, name) =>
-          obj.concat([
-            { where: { ruleName: name }, create: { ruleName: name } },
-          ]),
+      create: ruleNames.reduce(
+        (obj, name) => obj.concat([{ ruleName: name }]),
         [],
       ),
     };
