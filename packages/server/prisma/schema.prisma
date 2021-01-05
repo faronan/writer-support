@@ -15,7 +15,8 @@ model ProofreadingData {
 }
 
 model LintRule {
-  ruleName  String @unique
+  ruleId Int @id @default(autoincrement())
+  ruleName  String
   proofreadingData ProofreadingData? @relation(fields: [proofreadingDataId], references: [dataId])
   proofreadingDataId Int?
 }

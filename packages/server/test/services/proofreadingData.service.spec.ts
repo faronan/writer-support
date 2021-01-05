@@ -62,10 +62,13 @@ describe('ProofreadingDataService', () => {
       lintResultService['create'] = lintResultServiceCreateMock;
       const prismaCreateMock = jest.fn();
       prismaService.proofreadingData['create'] = prismaCreateMock;
+      const proofreadingDataTransformMock = jest.fn();
+      proofreadingDataService['transform'] = proofreadingDataTransformMock;
 
       await proofreadingDataService.create(testText, testRules);
       expect(lintRuleServiceCreateMock).toHaveBeenCalled();
       expect(lintResultServiceCreateMock).toHaveBeenCalled();
+      expect(proofreadingDataTransformMock).toHaveBeenCalled();
       expect(prismaCreateMock).toHaveBeenCalled();
       expect(prismaCreateMock.mock.calls[0][0]).toEqual(expectedArg);
     });
