@@ -2,13 +2,11 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { ProofreadingData } from '@/models/proofreadingData.model';
 
 @ObjectType()
-export class LintResult {
+export class User {
   @Field((_type) => ID)
-  resultId: number;
-  ruleName: string;
-  message: string;
-  line: number;
-  column: number;
+  userId: number;
+  userName: string;
+  userEmail: string;
   @Field((_type) => [ProofreadingData])
   proofreadingDatas: ProofreadingData[];
 }

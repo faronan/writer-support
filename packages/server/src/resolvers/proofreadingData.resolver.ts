@@ -19,6 +19,8 @@ export class ProofreadingDataResolver {
     return await this.ProofreadingDataService.create(
       proofreading.text,
       proofreading.ruleNames,
+      proofreading.userEmail,
+      proofreading.userName,
     );
   }
 }

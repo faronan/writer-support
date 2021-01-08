@@ -2,13 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type LintRule {
-  ruleId: ID!
-  ruleName: String!
+type User {
+  userId: ID!
+  proofreadingDatas: [ProofreadingData!]!
+  userName: String!
+  userEmail: String!
 }
 
 type LintResult {
   resultId: ID!
+  proofreadingDatas: [ProofreadingData!]!
+  ruleName: String!
   message: String!
   line: Float!
   column: Float!
@@ -16,10 +20,16 @@ type LintResult {
 
 type ProofreadingData {
   dataId: ID!
-  rules: [LintRule!]
+  user: User!
   result: [LintResult!]
   text: String!
+  created_at: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Query {
   proofreadingDatas: [ProofreadingData!]!
@@ -31,5 +41,7 @@ type Mutation {
 
 input AddProofreadingDataInput {
   text: String!
+  userEmail: String!
+  userName: String!
   ruleNames: [String!]!
 }

@@ -1,14 +1,15 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { LintRule } from '@/models/lintRule.model';
 import { LintResult } from '@/models/lintResult.model';
+import { User } from '@/models/user.model';
 
 @ObjectType()
 export class ProofreadingData {
   @Field((_type) => ID)
   dataId: number;
   text: string;
-  @Field((_type) => [LintRule],{ nullable: true })
-  rules?: LintRule[];
-  @Field((_type) => [LintResult],{ nullable: true })
+  @Field((_type) => User)
+  user: User;
+  @Field((_type) => [LintResult])
   result?: LintResult[];
+  created_at: Date;
 }

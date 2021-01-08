@@ -1,19 +1,19 @@
 import { Test } from '@nestjs/testing';
 import { LintResultService } from '@/services/lintResult.service';
-import { LintRuleService } from '@/services/lintRule.service';
+import { UserService } from '@/services/user.service';
 import { PrismaService } from '@/services/prisma.service';
 import { ProofreadingDataService } from '@/services/proofreadingData.service';
 
 describe('ProofreadingDataService', () => {
   let proofreadingDataService: ProofreadingDataService;
   let prismaService: PrismaService;
-  let lintRuleService: LintRuleService;
+  let userService: UserService;
   let lintResultService: LintResultService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
-        LintRuleService,
+        UserService,
         LintResultService,
         ProofreadingDataService,
         PrismaService,
@@ -24,7 +24,7 @@ describe('ProofreadingDataService', () => {
       ProofreadingDataService,
     );
     prismaService = moduleRef.get<PrismaService>(PrismaService);
-    lintRuleService = moduleRef.get<LintRuleService>(LintRuleService);
+    userService = moduleRef.get<UserService>(UserService);
     lintResultService = moduleRef.get<LintResultService>(LintResultService);
   });
 
@@ -42,20 +42,28 @@ describe('ProofreadingDataService', () => {
     it('should call each services create', async () => {
       const testText = 'test';
       const testRules = ['testRule'];
-      const testReturnRules = { create: [{ ruleName: testRules[0] }] };
+      const testEmail = 'test@test.com';
+      const testName = 'testName';
+      const testReturnUsers = {
+        connectOrCreate: {
+          where: { email: testEmail },
+          create: { email: testEmail, name: testName },
+        },
+      };
+
       const testReturnResults = { create: ['testResults'] };
       const expectedArg = {
         data: {
           text: testText,
-          rules: testReturnRules,
+          user: testReturnUsers,
           result: testReturnResults,
         },
       };
 
-      const lintRuleServiceCreateMock = jest.fn(() =>
-        Promise.resolve(testReturnRules),
+      const UserServiceCreateMock = jest.fn(() =>
+        Promise.resolve(testReturnUsers),
       );
-      lintRuleService['create'] = lintRuleServiceCreateMock;
+      userService['create'] = UserServiceCreateMock;
       const lintResultServiceCreateMock = jest.fn(() =>
         Promise.resolve(testReturnResults),
       );
@@ -65,8 +73,13 @@ describe('ProofreadingDataService', () => {
       const proofreadingDataTransformMock = jest.fn();
       proofreadingDataService['transform'] = proofreadingDataTransformMock;
 
-      await proofreadingDataService.create(testText, testRules);
-      expect(lintRuleServiceCreateMock).toHaveBeenCalled();
+      await proofreadingDataService.create(
+        testText,
+        testRules,
+        testEmail,
+        testName,
+      );
+      expect(UserServiceCreateMock).toHaveBeenCalled();
       expect(lintResultServiceCreateMock).toHaveBeenCalled();
       expect(proofreadingDataTransformMock).toHaveBeenCalled();
       expect(prismaCreateMock).toHaveBeenCalled();

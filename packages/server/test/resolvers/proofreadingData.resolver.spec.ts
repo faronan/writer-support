@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { ProofreadingDataResolver } from '@/resolvers/proofreadingData.resolver';
 import { LintResultService } from '@/services/lintResult.service';
-import { LintRuleService } from '@/services/lintRule.service';
+import { UserService } from '@/services/user.service';
 import { PrismaService } from '@/services/prisma.service';
 import { ProofreadingDataService } from '@/services/proofreadingData.service';
 
@@ -12,7 +12,7 @@ describe('ProofreadingDataResolver', () => {
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
-        LintRuleService,
+        UserService,
         LintResultService,
         ProofreadingDataService,
         PrismaService,
@@ -43,6 +43,8 @@ describe('ProofreadingDataResolver', () => {
       const proofreading = {
         text: 'testText',
         ruleNames: ['testRuleName'],
+        userEmail: 'test@test.com',
+        userName: 'testName',
       };
       const proofreadingDataServiceCreateMock = jest.fn();
       proofreadingDataService['create'] = proofreadingDataServiceCreateMock;
