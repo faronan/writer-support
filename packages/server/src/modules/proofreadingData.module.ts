@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ProofreadingDataService } from '@/services/proofreadingData.service';
 import { ProofreadingDataResolver } from '@/resolvers/proofreadingData.resolver';
 import { PrismaService } from '@/services/prisma.service';
-import { LintRuleService } from '@/services/lintRule.service';
+import { UserService } from '@/services/user.service';
 import { LintResultService } from '@/services/lintResult.service';
 
 @Module({
@@ -10,7 +10,7 @@ import { LintResultService } from '@/services/lintResult.service';
   controllers: [],
   providers: [
     LintResultService,
-    LintRuleService,
+    UserService,
     PrismaService,
     ProofreadingDataService,
     ProofreadingDataResolver,

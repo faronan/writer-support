@@ -21,6 +21,7 @@ export class LintResultService {
           obj.concat([
             {
               message: message.message,
+              ruleName: message.ruleId,
               line: message.line,
               column: message.column,
             },
