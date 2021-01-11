@@ -4,6 +4,7 @@ import { CreateProofreadingDocument } from '@graphql/graphql-operations';
 import { AppHead } from '@/components/atoms/AppHead';
 import { LoadingText } from '@/components/atoms/LoadingText';
 import { AuthComponent } from '@/components/organisms/AuthComponent';
+import { ProofreadingComponent } from '@/components/organisms/ProofreadingComponent';
 
 export default function Home() {
   const [, { loading: mutationLoading }] = useMutation(
@@ -20,7 +21,10 @@ export default function Home() {
         {sessionLoading || mutationLoading ? (
           <LoadingText></LoadingText>
         ) : (
-          <AuthComponent></AuthComponent>
+          <div>
+            <AuthComponent></AuthComponent>
+            <ProofreadingComponent></ProofreadingComponent>
+          </div>
         )}
       </main>
     </div>
