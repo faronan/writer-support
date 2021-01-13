@@ -13,6 +13,11 @@ import { ProofreadingInputForm } from '@/components/molecules/ProofreadingInputF
 import { ProofreadingResultText } from '@/components/molecules/ProofreadingResultText';
 import { ProofreadingResultTable } from '@/components/molecules/ProofreadingResultTable';
 
+export const RULE_NAMES_FOR_VIEW = [
+  'ら抜き言葉を使用しない',
+  '同じ助詞を連続して使用しない',
+];
+
 export const ProofreadingComponent = () => {
   const [text, setText] = useState('');
   const [session] = useSession();
@@ -33,10 +38,6 @@ export const ProofreadingComponent = () => {
   });
 
   const RULE_NAMES = ['no-dropping-the-ra', 'no-doubled-joshi'];
-  const RULE_NAMES_FOR_VIEW = [
-    'ら抜き言葉を使用しない',
-    '同じ助詞を連続して使用しない',
-  ];
 
   const proofreadingButtonOnClick = async (
     e: MouseEvent<HTMLButtonElement>,
