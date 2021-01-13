@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/client';
 import { CreateProofreadingDocument } from '@graphql/graphql-operations';
 import { AppHead } from '@/components/atoms/AppHead';
 import { LoadingText } from '@/components/atoms/LoadingText';
-import { AuthComponent } from '@/components/organisms/AuthComponent';
+import { AuthComponent } from '@/components/molecules/AuthComponent';
 import { ProofreadingComponent } from '@/components/organisms/ProofreadingComponent';
 
 export default function Home() {
