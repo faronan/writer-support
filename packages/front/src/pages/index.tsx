@@ -1,48 +1,30 @@
-import Head from 'next/head';
-import styles from '@/styles/Home.module.css';
-import { useQuery } from '@apollo/client';
-import { ProofreadingDatasDocument } from '@graphql/graphql-operations';
-import { signIn, signOut, useSession } from 'next-auth/client';
+import { useMutation } from '@apollo/client';
+import { useSession } from 'next-auth/client';
+import { CreateProofreadingDocument } from '@graphql/graphql-operations';
+import { AppHead } from '@/components/atoms/AppHead';
+import { LoadingText } from '@/components/atoms/LoadingText';
+import { AuthComponent } from '@/components/molecules/AuthComponent';
+import { ProofreadingComponent } from '@/components/organisms/ProofreadingComponent';
 
 export default function Home() {
-  const [session, loading] = useSession();
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const [, { loading: mutationLoading }] = useMutation(
+    CreateProofreadingDocument,
+  );
+
+  const [, sessionLoading] = useSession();
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div>
+      <AppHead></AppHead>
 
-      <main className={styles.main}>
-        {session && (
-          <>
-            Signed in as {session.user.name} <br />
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                signOut();
-              }}
-            >
-              Sign out
-            </button>
-          </>
-        )}
-        {!session && (
-          <>
-            Not signed in <br />
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                signIn();
-              }}
-            >
-              Sign in
-            </button>
-          </>
+      <main>
+        {sessionLoading || mutationLoading ? (
+          <LoadingText></LoadingText>
+        ) : (
+          <div>
+            <AuthComponent></AuthComponent>
+            <ProofreadingComponent></ProofreadingComponent>
+          </div>
         )}
       </main>
     </div>

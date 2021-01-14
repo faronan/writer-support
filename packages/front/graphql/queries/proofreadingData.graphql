@@ -1,6 +1,15 @@
-query proofreadingDatas {
-  proofreadingDatas {
+mutation createProofreading($proofreading: AddProofreadingDataInput!) {
+  createProofreading(proofreading: $proofreading) {
     dataId
     text
+    user {
+      userName
+    }
+    result {
+      ruleName
+      message
+      line
+      column
+    }
   }
 }

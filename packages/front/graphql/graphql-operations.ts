@@ -10,29 +10,37 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
+  DateTime: any;
 };
 
-export type LintRule = {
-  __typename?: 'LintRule';
-  ruleId: Scalars['String'];
-  isValid: Scalars['Boolean'];
+export type User = {
+  __typename?: 'User';
+  userId: Scalars['ID'];
+  proofreadingDatas: Array<ProofreadingData>;
+  userName: Scalars['String'];
+  userEmail: Scalars['String'];
 };
 
 export type LintResult = {
   __typename?: 'LintResult';
-  resultId: Scalars['Int'];
+  resultId: Scalars['ID'];
+  proofreadingDatas: Array<ProofreadingData>;
+  ruleName: Scalars['String'];
   message: Scalars['String'];
-  line: Scalars['Int'];
-  column: Scalars['Int'];
+  line: Scalars['Float'];
+  column: Scalars['Float'];
 };
 
 export type ProofreadingData = {
   __typename?: 'ProofreadingData';
-  dataId: Scalars['Int'];
+  dataId: Scalars['ID'];
+  user: User;
+  result?: Maybe<Array<LintResult>>;
   text: Scalars['String'];
-  rules: LintRule;
-  result: LintResult;
+  created_at: Scalars['DateTime'];
 };
+
 
 export type Query = {
   __typename?: 'Query';
@@ -46,19 +54,35 @@ export type Mutation = {
 
 
 export type MutationCreateProofreadingArgs = {
-  text: Scalars['String'];
+  proofreading: AddProofreadingDataInput;
 };
 
-export type ProofreadingDatasQueryVariables = Exact<{ [key: string]: never; }>;
+export type AddProofreadingDataInput = {
+  text: Scalars['String'];
+  userEmail: Scalars['String'];
+  userName: Scalars['String'];
+  ruleNames: Array<Scalars['String']>;
+};
+
+export type CreateProofreadingMutationVariables = Exact<{
+  proofreading: AddProofreadingDataInput;
+}>;
 
 
-export type ProofreadingDatasQuery = (
-  { __typename?: 'Query' }
-  & { proofreadingDatas: Array<(
+export type CreateProofreadingMutation = (
+  { __typename?: 'Mutation' }
+  & { createProofreading: (
     { __typename?: 'ProofreadingData' }
     & Pick<ProofreadingData, 'dataId' | 'text'>
-  )> }
+    & { user: (
+      { __typename?: 'User' }
+      & Pick<User, 'userName'>
+    ), result?: Maybe<Array<(
+      { __typename?: 'LintResult' }
+      & Pick<LintResult, 'ruleName' | 'message' | 'line' | 'column'>
+    )>> }
+  ) }
 );
 
 
-export const ProofreadingDatasDocument: DocumentNode<ProofreadingDatasQuery, ProofreadingDatasQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"proofreadingDatas"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"proofreadingDatas"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dataId"}},{"kind":"Field","name":{"kind":"Name","value":"text"}}]}}]}}]};
+export const CreateProofreadingDocument: DocumentNode<CreateProofreadingMutation, CreateProofreadingMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createProofreading"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"proofreading"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddProofreadingDataInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProofreading"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"proofreading"},"value":{"kind":"Variable","name":{"kind":"Name","value":"proofreading"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dataId"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"result"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ruleName"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"line"}},{"kind":"Field","name":{"kind":"Name","value":"column"}}]}}]}}]}}]};
