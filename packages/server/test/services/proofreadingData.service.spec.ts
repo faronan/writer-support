@@ -58,6 +58,10 @@ describe('ProofreadingDataService', () => {
           user: testReturnUsers,
           result: testReturnResults,
         },
+        include: {
+          user: true,
+          result: true,
+        },
       };
 
       const UserServiceCreateMock = jest.fn(() =>
@@ -70,8 +74,6 @@ describe('ProofreadingDataService', () => {
       lintResultService['create'] = lintResultServiceCreateMock;
       const prismaCreateMock = jest.fn();
       prismaService.proofreadingData['create'] = prismaCreateMock;
-      const proofreadingDataTransformMock = jest.fn();
-      proofreadingDataService['transform'] = proofreadingDataTransformMock;
 
       await proofreadingDataService.create(
         testText,
@@ -81,7 +83,6 @@ describe('ProofreadingDataService', () => {
       );
       expect(UserServiceCreateMock).toHaveBeenCalled();
       expect(lintResultServiceCreateMock).toHaveBeenCalled();
-      expect(proofreadingDataTransformMock).toHaveBeenCalled();
       expect(prismaCreateMock).toHaveBeenCalled();
       expect(prismaCreateMock.mock.calls[0][0]).toEqual(expectedArg);
     });
