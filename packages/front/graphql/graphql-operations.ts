@@ -16,16 +16,16 @@ export type Scalars = {
 
 export type User = {
   __typename?: 'User';
-  userId: Scalars['ID'];
-  proofreadingDatas: Array<ProofreadingData>;
-  userName: Scalars['String'];
-  userEmail: Scalars['String'];
+  id: Scalars['ID'];
+  proofreadingDataList: Array<ProofreadingData>;
+  name: Scalars['String'];
+  email: Scalars['String'];
 };
 
 export type LintResult = {
   __typename?: 'LintResult';
   resultId: Scalars['ID'];
-  proofreadingDatas: Array<ProofreadingData>;
+  proofreadingDataList: Array<ProofreadingData>;
   ruleName: Scalars['String'];
   message: Scalars['String'];
   line: Scalars['Float'];
@@ -35,16 +35,16 @@ export type LintResult = {
 export type ProofreadingData = {
   __typename?: 'ProofreadingData';
   dataId: Scalars['ID'];
-  user: User;
+  user?: Maybe<User>;
   result?: Maybe<Array<LintResult>>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   text: Scalars['String'];
-  created_at: Scalars['DateTime'];
 };
 
 
 export type Query = {
   __typename?: 'Query';
-  proofreadingDatas: Array<ProofreadingData>;
+  proofreadingDataList: Array<ProofreadingData>;
 };
 
 export type Mutation = {
@@ -73,16 +73,32 @@ export type CreateProofreadingMutation = (
   { __typename?: 'Mutation' }
   & { createProofreading: (
     { __typename?: 'ProofreadingData' }
-    & Pick<ProofreadingData, 'dataId' | 'text'>
-    & { user: (
-      { __typename?: 'User' }
-      & Pick<User, 'userName'>
-    ), result?: Maybe<Array<(
+    & Pick<ProofreadingData, 'text'>
+    & { result?: Maybe<Array<(
       { __typename?: 'LintResult' }
       & Pick<LintResult, 'ruleName' | 'message' | 'line' | 'column'>
     )>> }
   ) }
 );
 
+export type ProofreadingDataListQueryVariables = Exact<{ [key: string]: never; }>;
 
-export const CreateProofreadingDocument: DocumentNode<CreateProofreadingMutation, CreateProofreadingMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createProofreading"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"proofreading"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddProofreadingDataInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProofreading"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"proofreading"},"value":{"kind":"Variable","name":{"kind":"Name","value":"proofreading"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dataId"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"result"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ruleName"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"line"}},{"kind":"Field","name":{"kind":"Name","value":"column"}}]}}]}}]}}]};
+
+export type ProofreadingDataListQuery = (
+  { __typename?: 'Query' }
+  & { proofreadingDataList: Array<(
+    { __typename?: 'ProofreadingData' }
+    & Pick<ProofreadingData, 'text' | 'createdAt'>
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'name'>
+    )>, result?: Maybe<Array<(
+      { __typename?: 'LintResult' }
+      & Pick<LintResult, 'ruleName' | 'message' | 'line' | 'column'>
+    )>> }
+  )> }
+);
+
+
+export const CreateProofreadingDocument: DocumentNode<CreateProofreadingMutation, CreateProofreadingMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createProofreading"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"proofreading"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddProofreadingDataInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProofreading"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"proofreading"},"value":{"kind":"Variable","name":{"kind":"Name","value":"proofreading"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"result"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ruleName"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"line"}},{"kind":"Field","name":{"kind":"Name","value":"column"}}]}}]}}]}}]};
+export const ProofreadingDataListDocument: DocumentNode<ProofreadingDataListQuery, ProofreadingDataListQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"proofreadingDataList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"proofreadingDataList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"result"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ruleName"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"line"}},{"kind":"Field","name":{"kind":"Name","value":"column"}}]}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]};

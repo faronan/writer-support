@@ -1,0 +1,15 @@
+query proofreadingDataList {
+  proofreadingDataList {
+    user {
+      name
+    }
+    result {
+      ruleName
+      message
+      line
+      column
+    }
+    text
+    createdAt
+  }
+}
