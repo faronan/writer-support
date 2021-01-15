@@ -4,9 +4,9 @@ import { ProofreadingData } from '@/models/proofreadingData.model';
 @ObjectType()
 export class User {
   @Field((_type) => ID)
-  userId: number;
-  userName: string;
-  userEmail: string;
+  id: number;
+  name: string;
+  email: string;
   @Field((_type) => [ProofreadingData])
   proofreadingDatas: ProofreadingData[];
 }

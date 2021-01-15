@@ -7,9 +7,10 @@ export class ProofreadingData {
   @Field((_type) => ID)
   dataId: number;
   text: string;
-  @Field((_type) => User)
+  @Field((_type) => User, { nullable: true })
   user: User;
   @Field((_type) => [LintResult])
   result?: LintResult[];
-  created_at: Date;
+  @Field({ nullable: true })
+  createdAt: Date;
 }
