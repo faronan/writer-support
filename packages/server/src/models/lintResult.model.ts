@@ -10,5 +10,5 @@ export class LintResult {
   line: number;
   column: number;
   @Field((_type) => [ProofreadingData])
-  proofreadingDatas: ProofreadingData[];
+  proofreadingDataList: ProofreadingData[];
 }

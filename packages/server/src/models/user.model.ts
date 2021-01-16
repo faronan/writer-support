@@ -8,5 +8,5 @@ export class User {
   name: string;
   email: string;
   @Field((_type) => [ProofreadingData])
-  proofreadingDatas: ProofreadingData[];
+  proofreadingDataList: ProofreadingData[];
 }

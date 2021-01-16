@@ -28,12 +28,12 @@ describe('ProofreadingDataResolver', () => {
     );
   });
 
-  describe('proofreadingDatas', () => {
+  describe('proofreadingDataList', () => {
     it('should call ProofreadingDataService findMany', async () => {
       const proofreadingDataServiceFindManyMock = jest.fn();
       proofreadingDataService['findMany'] = proofreadingDataServiceFindManyMock;
 
-      await proofreadingDataResolver.proofreadingDatas();
+      await proofreadingDataResolver.proofreadingDataList();
       expect(proofreadingDataServiceFindManyMock).toHaveBeenCalled();
     });
   });
