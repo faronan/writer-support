@@ -1,7 +1,8 @@
+import { ReactNode } from 'react';
 import { Box } from '@chakra-ui/react';
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export const LayoutBox = ({ children }: Props) => {
