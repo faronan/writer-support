@@ -11,7 +11,7 @@ model User {
   id            Int       @id @default(autoincrement())
   name          String
   email         String   @unique
-  proofreadingDatas ProofreadingData[]
+  proofreadingDataList ProofreadingData[]
 }
 model ProofreadingData {
   dataId Int @id @default(autoincrement())
@@ -27,5 +27,5 @@ model LintResult {
   ruleName  String
   line     Int
   column   Int
-  proofreadingDatas ProofreadingData[]
+  proofreadingDataList ProofreadingData[]
 }

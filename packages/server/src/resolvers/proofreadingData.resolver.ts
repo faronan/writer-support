@@ -8,7 +8,7 @@ export class ProofreadingDataResolver {
   constructor(private ProofreadingDataService: ProofreadingDataService) {}
 
   @Query((returns) => [ProofreadingData])
-  async proofreadingDatas() {
+  async proofreadingDataList() {
     return await this.ProofreadingDataService.findMany();
   }
 
