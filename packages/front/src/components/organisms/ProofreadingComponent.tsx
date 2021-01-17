@@ -12,11 +12,7 @@ import { SuccessAlert } from '@/components/atoms/SuccessAlert';
 import { ProofreadingInputForm } from '@/components/molecules/ProofreadingInputForm';
 import { ProofreadingResultText } from '@/components/molecules/ProofreadingResultText';
 import { ProofreadingResultTable } from '@/components/molecules/ProofreadingResultTable';
-
-export const RULE_NAMES_FOR_VIEW = [
-  'ら抜き言葉を使用しない',
-  '同じ助詞を連続して使用しない',
-];
+import { LINT_RULES } from '@/lib/RuleNameData';
 
 export const ProofreadingComponent = () => {
   const [text, setText] = useState('');
@@ -77,7 +73,7 @@ export const ProofreadingComponent = () => {
         buttonOnClick={proofreadingButtonOnClick}
         checkBoxItems={checkedItems}
         setCheckBoxItems={setCheckedItems}
-        ruleNames={RULE_NAMES_FOR_VIEW}
+        ruleNames={Object.values(LINT_RULES)}
       ></ProofreadingInputForm>
 
       {response.data && (

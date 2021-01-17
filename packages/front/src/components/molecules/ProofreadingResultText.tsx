@@ -1,4 +1,4 @@
-import { LayoutBox } from '@/components/atoms/LayoutBox';
+import { BorderBox } from '@/components/atoms/BorderBox';
 import { NormalCode } from '@/components/atoms/NormalCode';
 import { RedCode } from '@/components/atoms/RedCode';
 import { LintResult } from '@graphql/graphql-operations';
@@ -15,7 +15,7 @@ export const ProofreadingResultText = ({
   proofreadResults,
 }: Props) => {
   return (
-    <LayoutBox>
+    <BorderBox>
       {splitResponseTexts.map((row, rowIndex) => {
         const proofreadResultsInRow = proofreadResults.filter(
           (v) => v.line == rowIndex + 1,
@@ -76,6 +76,6 @@ export const ProofreadingResultText = ({
           </div>
         );
       })}
-    </LayoutBox>
+    </BorderBox>
   );
 };

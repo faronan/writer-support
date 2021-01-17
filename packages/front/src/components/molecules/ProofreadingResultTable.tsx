@@ -1,5 +1,5 @@
-import { LayoutBox } from '@/components/atoms/LayoutBox';
 import { Table, Tbody, Tr, Td } from '@chakra-ui/react';
+import { BorderBox } from '@/components/atoms/BorderBox';
 import { RedCode } from '@/components/atoms/RedCode';
 import { LintResult } from '@graphql/graphql-operations';
 
@@ -15,7 +15,7 @@ export const ProofreadingResultTable = ({
   proofreadResults,
 }: Props) => {
   return (
-    <LayoutBox>
+    <BorderBox>
       <Table variant="simple">
         <Tbody>
           {proofreadResults.map((v, index) => (
@@ -31,6 +31,6 @@ export const ProofreadingResultTable = ({
           ))}
         </Tbody>
       </Table>
-    </LayoutBox>
+    </BorderBox>
   );
 };
