@@ -13,6 +13,7 @@ export const InputTextarea = ({ value, onChange, placeholder }: Props) => {
       value={value}
       onChange={onChange}
       placeholder={placeholder}
+      minW="full"
       minH="xs"
     />
   );
