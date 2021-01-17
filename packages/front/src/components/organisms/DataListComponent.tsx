@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import {
   Accordion,
@@ -7,22 +8,47 @@ import {
   AccordionPanel,
 } from '@chakra-ui/react';
 import { CenterContainer } from '@/components/atoms/CenterContainer';
+import { DateFilterInputForm } from '@/components/molecules/DateFilterInputForm';
 import { DataTextExample } from '@/components/molecules/DataTextExample';
 import { DataLintRuleNames } from '@/components/molecules/DataLintRuleNames';
 import { LINT_RULES } from '@/lib/RuleNameData';
 import { ProofreadingDataListDocument } from '@graphql/graphql-operations';
 
 export const DataListComponent = () => {
+  const today = new Date();
+  const oneMonthAgoDay = new Date();
+  oneMonthAgoDay.setMonth(today.getMonth() - 1);
+  const [startDate, setStartDate] = useState(oneMonthAgoDay);
+  const [endDate, setEndDate] = useState(today);
+
+  type ruleToUsedCount = {
+    key: string;
+    value: any;
+  };
+  const [ruleUsedCountList, setRuleUsedCountList] = useState<ruleToUsedCount[]>(
+    [],
+  );
+
+  type lintResultText = {
+    targetLine: string;
+    lintResultColumn: number;
+  };
+  const [lintExampleTextList, setLintExampleTextList] = useState<
+    lintResultText[]
+  >([]);
+
   const { loading: queryLoading, data: queryData } = useQuery(
     ProofreadingDataListDocument,
   );
 
-  const sortedRuleUsedCountList = (() => {
-    if (queryLoading) {
-      return [];
-    }
+  const stateUpdate = () => {
+    const filterProofreadingDataList = queryData.proofreadingDataList.filter(
+      (data) =>
+        startDate.toISOString() < data.createdAt &&
+        data.createdAt < endDate.toISOString(),
+    );
 
-    const ruleNames = queryData.proofreadingDataList
+    const ruleNames = filterProofreadingDataList
       .map((proofreadingData) =>
         proofreadingData.result.map((result) => result.ruleName),
       )
@@ -38,15 +64,9 @@ export const DataListComponent = () => {
         if (a.value > b.value) return -1;
         return 0;
       });
-    return sortedRuleUsedCountList;
-  })();
+    setRuleUsedCountList(sortedRuleUsedCountList);
 
-  const lintExampleTextList = (() => {
-    if (!sortedRuleUsedCountList) {
-      return [];
-    }
-
-    return sortedRuleUsedCountList.map((hash) => {
+    const lintExampleTexts = sortedRuleUsedCountList.map((hash) => {
       const ruleName = hash.key;
       const firstMatchProofreadingData = queryData.proofreadingDataList
         .filter(
@@ -69,12 +89,26 @@ export const DataListComponent = () => {
 
       return { targetLine, lintResultColumn };
     });
-  })();
+    setLintExampleTextList(lintExampleTexts);
+  };
+
+  useEffect(() => {
+    if (queryLoading) {
+      return;
+    }
+    stateUpdate();
+  }, [queryLoading, startDate, endDate]);
 
   return (
     <CenterContainer>
-      <Accordion allowMultiple minW="full">
-        {sortedRuleUsedCountList.map((hash, index) => (
+      <DateFilterInputForm
+        startSelectedDate={startDate}
+        startOnChange={setStartDate}
+        endSelectedDate={endDate}
+        endOnChange={setEndDate}
+      ></DateFilterInputForm>
+      <Accordion allowMultiple minW="full" border="1px" borderColor="gray.200">
+        {ruleUsedCountList.map((hash, index) => (
           <AccordionItem key={index}>
             <AccordionButton>
               <DataLintRuleNames
