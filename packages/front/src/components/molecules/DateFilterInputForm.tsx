@@ -1,4 +1,5 @@
-import { FormControl, FormLabel, HStack } from '@chakra-ui/react';
+import { ChangeEvent } from 'react';
+import { FormControl, FormLabel, HStack, Select } from '@chakra-ui/react';
 import { CalendarIcon } from '@chakra-ui/icons';
 import { BorderBox } from '@/components/atoms/BorderBox';
 import { Calender } from '@/components/atoms/Calender';
@@ -8,6 +9,9 @@ type Props = {
   startOnChange: (date: Date) => void;
   endSelectedDate: Date;
   endOnChange: (date: Date) => void;
+  selectedUser: string;
+  selectOnChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  selectOptions: string[];
 };
 
 export const DateFilterInputForm = ({
@@ -15,12 +19,15 @@ export const DateFilterInputForm = ({
   startOnChange,
   endSelectedDate,
   endOnChange,
+  selectedUser,
+  selectOnChange,
+  selectOptions,
 }: Props) => {
   return (
     <BorderBox>
       <HStack>
         <FormControl>
-          <FormLabel>開始日時</FormLabel>
+          <FormLabel>開始日</FormLabel>
           <CalendarIcon mr={3} mb={1} />
           <Calender
             selectedDate={startSelectedDate}
@@ -29,7 +36,7 @@ export const DateFilterInputForm = ({
           ></Calender>
         </FormControl>
         <FormControl>
-          <FormLabel>終了日時</FormLabel>
+          <FormLabel>終了日</FormLabel>
           <CalendarIcon mr={3} mb={1} />
           <Calender
             selectedDate={endSelectedDate}
@@ -39,6 +46,18 @@ export const DateFilterInputForm = ({
           ></Calender>
         </FormControl>
       </HStack>
+      <FormControl mt={5}>
+        <FormLabel>対象のユーザー</FormLabel>
+        <Select
+          value={selectedUser}
+          onChange={selectOnChange}
+          placeholder="指定なし"
+        >
+          {selectOptions.map((option,index) => (
+            <option key = {index} value={option}>{option}</option>
+          ))}
+        </Select>
+      </FormControl>
     </BorderBox>
   );
 };

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/client';
 import { useQuery } from '@apollo/client';
 import {
   Accordion,
@@ -15,6 +16,8 @@ import { LINT_RULES } from '@/lib/RuleNameData';
 import { ProofreadingDataListDocument } from '@graphql/graphql-operations';
 
 export const DataListComponent = () => {
+  const [session] = useSession();
+
   const today = new Date();
   const oneMonthAgoDay = new Date();
   oneMonthAgoDay.setMonth(today.getMonth() - 1);
@@ -37,18 +40,26 @@ export const DataListComponent = () => {
     lintResultText[]
   >([]);
 
+  const [userSelect, setUserSelect] = useState('');
+
   const { loading: queryLoading, data: queryData } = useQuery(
     ProofreadingDataListDocument,
   );
 
   const stateUpdate = () => {
-    const filterProofreadingDataList = queryData.proofreadingDataList.filter(
+    const userFilterProofreadingDataList = userSelect
+      ? queryData.proofreadingDataList.filter(
+          (data) => data.user.name == session.user.name,
+        )
+      : queryData.proofreadingDataList;
+
+    const dateFilterProofreadingDataList = userFilterProofreadingDataList.filter(
       (data) =>
         startDate.toISOString() < data.createdAt &&
         data.createdAt < endDate.toISOString(),
     );
 
-    const ruleNames = filterProofreadingDataList
+    const ruleNames = dateFilterProofreadingDataList
       .map((proofreadingData) =>
         proofreadingData.result.map((result) => result.ruleName),
       )
@@ -68,6 +79,7 @@ export const DataListComponent = () => {
 
     const lintExampleTexts = sortedRuleUsedCountList.map((hash) => {
       const ruleName = hash.key;
+
       const firstMatchProofreadingData = queryData.proofreadingDataList
         .filter(
           (data) =>
@@ -97,7 +109,7 @@ export const DataListComponent = () => {
       return;
     }
     stateUpdate();
-  }, [queryLoading, startDate, endDate]);
+  }, [queryLoading, startDate, endDate, userSelect]);
 
   return (
     <CenterContainer>
@@ -106,6 +118,12 @@ export const DataListComponent = () => {
         startOnChange={setStartDate}
         endSelectedDate={endDate}
         endOnChange={setEndDate}
+        selectedUser={userSelect}
+        selectOnChange={(e) => {
+          e.preventDefault();
+          setUserSelect(e.target.value);
+        }}
+        selectOptions={['現在ログイン中のユーザー']}
       ></DateFilterInputForm>
       <Accordion allowMultiple minW="full" border="1px" borderColor="gray.200">
         {ruleUsedCountList.map((hash, index) => (
