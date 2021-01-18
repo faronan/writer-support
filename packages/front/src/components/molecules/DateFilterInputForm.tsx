@@ -53,8 +53,10 @@ export const DateFilterInputForm = ({
           onChange={selectOnChange}
           placeholder="指定なし"
         >
-          {selectOptions.map((option,index) => (
-            <option key = {index} value={option}>{option}</option>
+          {selectOptions.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
           ))}
         </Select>
       </FormControl>
