@@ -32,12 +32,14 @@ export const ProofreadingInputForm = ({
 
       <Stack mt={10} spacing={1}>
         {checkBoxItems.map((checkedItem, index, array) => (
-          <div key = {index}>
+          <div key={index}>
             <CheckBox
               isChecked={checkedItem}
               onChange={(e) => {
                 setCheckBoxItems(
-                  array.map((item, i) => (i === index ? e.target.checked : item)),
+                  array.map((item, i) =>
+                    i === index ? e.target.checked : item,
+                  ),
                 );
               }}
               label={ruleNames[index]}

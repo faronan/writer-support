@@ -1,8 +1,6 @@
 import { useMutation } from '@apollo/client';
-import { useSession } from 'next-auth/client';
 import { CreateProofreadingDocument } from '@graphql/graphql-operations';
-import { AppHead } from '@/components/atoms/AppHead';
-import { LoadingText } from '@/components/atoms/LoadingText';
+import { Layout } from '@/components/templates/layout';
 import { AuthComponent } from '@/components/molecules/AuthComponent';
 import { ProofreadingComponent } from '@/components/organisms/ProofreadingComponent';
 
@@ -11,22 +9,10 @@ export default function Home() {
     CreateProofreadingDocument,
   );
 
-  const [, sessionLoading] = useSession();
-
   return (
-    <div>
-      <AppHead></AppHead>
-
-      <main>
-        {sessionLoading || mutationLoading ? (
-          <LoadingText></LoadingText>
-        ) : (
-          <div>
-            <AuthComponent></AuthComponent>
-            <ProofreadingComponent></ProofreadingComponent>
-          </div>
-        )}
-      </main>
-    </div>
+    <Layout isLoading={mutationLoading}>
+      <AuthComponent></AuthComponent>
+      <ProofreadingComponent></ProofreadingComponent>
+    </Layout>
   );
 }

@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { MockedProvider } from '@apollo/client/testing';
 import client, { Session } from 'next-auth/client';
 import Home from '@/pages/index';
-import { RULE_NAMES_FOR_VIEW } from '@/components/organisms/ProofreadingComponent';
+import { LINT_RULES } from '@/lib/RuleNameData';
 
 describe(`Home`, () => {
   it('should　render loading view', async () => {
@@ -61,17 +61,11 @@ describe(`Home`, () => {
         <Home />
       </MockedProvider>,
     );
-    expect(
-      screen.getByRole('textbox'),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: /送信/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /送信/i })).toBeInTheDocument();
 
-    RULE_NAMES_FOR_VIEW.forEach(name => {
-      expect(
-        screen.getByText(new RegExp(name)),
-      ).toBeInTheDocument();
+    Object.values(LINT_RULES).forEach((name) => {
+      expect(screen.getByText(new RegExp(name))).toBeInTheDocument();
     });
   });
 });
