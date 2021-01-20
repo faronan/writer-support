@@ -1,31 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model User {
-  id            Int       @id @default(autoincrement())
-  name          String
-  email         String   @unique
+  id                   Int                @id @default(autoincrement())
+  name                 String
+  email                String             @unique
   proofreadingDataList ProofreadingData[]
 }
+
 model ProofreadingData {
-  dataId Int @id @default(autoincrement())
-  text   String
-  user   User? @relation(fields: [userId], references: [id])
-  userId  Int?
-  result LintResult[]
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  dataId    Int          @id @default(autoincrement())
+  text      String?
+  userId    Int?
+  createdAt DateTime     @default(now()) @map("created_at")
+  user      User?        @relation(fields: [userId], references: [id])
+  result    LintResult[]
+
+  @@index([userId], name: "userId")
 }
+
 model LintResult {
-  resultId Int @id @default(autoincrement())
-  message  String
-  ruleName  String
-  line     Int
-  column   Int
+  resultId             Int                @id @default(autoincrement())
+  message              String
+  ruleName             String
+  line                 Int
+  column               Int
   proofreadingDataList ProofreadingData[]
 }
