@@ -91,6 +91,7 @@ export const ProofreadingInputForm = ({
                       );
                     }}
                     label={name}
+                    key={name}
                   ></CheckBox>
                 ))}
               </Stack>
