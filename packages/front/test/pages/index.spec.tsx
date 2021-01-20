@@ -30,6 +30,9 @@ describe(`Home`, () => {
     expect(
       screen.getByRole('button', { name: /sign in/i }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', {name: /ゲストログイン/i}),
+    ).toBeInTheDocument();
   });
 
   it('should render login view', async () => {
