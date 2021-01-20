@@ -12,7 +12,12 @@ import { SuccessAlert } from '@/components/atoms/SuccessAlert';
 import { ProofreadingInputForm } from '@/components/molecules/ProofreadingInputForm';
 import { ProofreadingResultText } from '@/components/molecules/ProofreadingResultText';
 import { ProofreadingResultTable } from '@/components/molecules/ProofreadingResultTable';
-import { LINT_RULES } from '@/lib/RuleNameData';
+import {
+  LINT_RULES,
+  BASE_RULES,
+  CHECK_RULES,
+  QUALITY_RULES,
+} from '@/lib/RuleNameData';
 
 export const ProofreadingComponent = () => {
   const [text, setText] = useState('');
@@ -20,7 +25,7 @@ export const ProofreadingComponent = () => {
   const [createProofreading] = useMutation(CreateProofreadingDocument);
 
   const [checkedItems, setCheckedItems] = useState(
-    new Array<boolean>(2).fill(false),
+    new Array<boolean>(Object.keys(LINT_RULES).length).fill(false),
   );
 
   type createProofreadingResult = FetchResult<
@@ -33,14 +38,14 @@ export const ProofreadingComponent = () => {
     data: null,
   });
 
-  const RULE_NAMES = ['no-dropping-the-ra', 'no-doubled-joshi'];
-
   const proofreadingButtonOnClick = async (
     e: MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
     const selectRuleNames = checkedItems.reduce(
-      (arr: string[], val, i) => (val && arr.push(RULE_NAMES[i]), arr),
+      (arr: string[], val, i) => (
+        val && arr.push(Object.keys(LINT_RULES)[i]), arr
+      ),
       [],
     );
     const proofreading: AddProofreadingDataInput = {
@@ -73,7 +78,11 @@ export const ProofreadingComponent = () => {
         buttonOnClick={proofreadingButtonOnClick}
         checkBoxItems={checkedItems}
         setCheckBoxItems={setCheckedItems}
-        ruleNames={Object.values(LINT_RULES)}
+        ruleNames={[
+          Object.values(BASE_RULES),
+          Object.values(CHECK_RULES),
+          Object.values(QUALITY_RULES),
+        ]}
       ></ProofreadingInputForm>
 
       {response.data && (
