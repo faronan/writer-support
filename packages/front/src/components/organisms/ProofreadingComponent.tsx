@@ -44,7 +44,7 @@ export const ProofreadingComponent = () => {
     e.preventDefault();
     const selectRuleNames = checkedItems.reduce(
       (arr: string[], val, i) => (
-        val && arr.push(Object.values(LINT_RULES)[i]), arr
+        val && arr.push(Object.keys(LINT_RULES)[i]), arr
       ),
       [],
     );
