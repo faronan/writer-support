@@ -86,6 +86,7 @@ export const ProofreadingComponent = () => {
       ></ProofreadingInputForm>
 
       {response.data && (
+        proofreadResults.length > 0 ?
         <>
           <SuccessAlert text={'校正結果です'}></SuccessAlert>
           <ProofreadingResultText
@@ -96,7 +97,8 @@ export const ProofreadingComponent = () => {
             splitResponseTexts={splitResponseText}
             proofreadResults={proofreadResults}
           ></ProofreadingResultTable>
-        </>
+        </>:
+          <SuccessAlert text={'問題ありません🎉'}></SuccessAlert>
       )}
     </CenterContainer>
   );

@@ -9,6 +9,7 @@ import {
   AccordionPanel,
 } from '@chakra-ui/react';
 import { CenterContainer } from '@/components/atoms/CenterContainer';
+import { InfoAlert } from '@/components/atoms/InfoAlert';
 import { DateFilterInputForm } from '@/components/molecules/DateFilterInputForm';
 import { DataTextExample } from '@/components/molecules/DataTextExample';
 import { DataLintRuleNames } from '@/components/molecules/DataLintRuleNames';
@@ -125,7 +126,8 @@ export const DataListComponent = () => {
         }}
         selectOptions={['現在ログイン中のユーザー']}
       ></DateFilterInputForm>
-      <Accordion allowMultiple minW="full" border="1px" borderColor="gray.200">
+      {ruleUsedCountList.length > 0 ?
+      (<Accordion allowMultiple minW="full" border="1px" borderColor="gray.200">
         {ruleUsedCountList.map((hash, index) => (
           <AccordionItem key={index}>
             <AccordionButton>
@@ -144,7 +146,7 @@ export const DataListComponent = () => {
             </AccordionPanel>
           </AccordionItem>
         ))}
-      </Accordion>
+      </Accordion> ): <InfoAlert text="該当のデータはありません"></InfoAlert>}
     </CenterContainer>
   );
 };
