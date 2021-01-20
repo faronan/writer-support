@@ -11,6 +11,14 @@ export const AuthSignIn = () => {
       >
         Sign in
       </button>
+      <button
+        onClick={async (e) => {
+          e.preventDefault();
+          await signIn("credentials");
+        }}
+      >
+        ゲストログイン
+      </button>
     </div>
   );
 };
