@@ -1,9 +1,9 @@
 export const BASE_RULES = {
   'sentence-length': '1文の長さは100文字以下とする',
-  'max-ten': '1文に読点(、)は3つまでとする',
+  'max-ten': '1文に読点は3つまでとする',
+  'ja-no-mixed-period': '文末には句点を使い文を区切る',
   'max-kanji-continuous-len': '連続する漢字は6文字までとする',
   'no-mix-dearu-desumasu': '「ですます調」「である調」を統一する',
-  'ja-no-mixed-period': '文末には「。」を使い文を区切る',
 };
 
 export const CHECK_RULES = {
