@@ -9,7 +9,6 @@ export const BASE_RULES = {
 export const CHECK_RULES = {
   'ja-no-abusage': 'よくある日本語の誤用をチェック',
   'ja-unnatural-alphabet': '不自然なアルファベットをチェック',
-  'ja-hiragana-fukushi': '漢字の閉じ方、開き方をチェック',
 };
 
 export const QUALITY_RULES = {

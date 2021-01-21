@@ -10,7 +10,7 @@ const TOP_COLORS = {
   3: 'orange.600',
 };
 
-const DEFAULT_COLOR = 'black';
+const DEFAULT_COLOR = 'gray.100';
 
 export const RankBadge = ({ rank }: Props) => {
   const color = TOP_COLORS[rank] || DEFAULT_COLOR;

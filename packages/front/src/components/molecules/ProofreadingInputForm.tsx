@@ -44,7 +44,7 @@ export const ProofreadingInputForm = ({
       .every((item) => item);
   };
 
-  const BulkCheckboxSelect = (index: number, checked: boolean) => {
+  const bulkCheckboxSelect = (index: number, checked: boolean) => {
     const selectedIndex = ruleNames[index].map((name) => getIndex(name));
     setCheckBoxItems(
       checkBoxItems.map((item, i) =>
@@ -75,7 +75,7 @@ export const ProofreadingInputForm = ({
                   isChecked={getBulkCheckboxIsChecked(index)}
                   onChange={(e) => {
                     e.preventDefault();
-                    BulkCheckboxSelect(index, e.target.checked);
+                    bulkCheckboxSelect(index, e.target.checked);
                   }}
                   label={'一括選択'}
                 ></ColorCheckBox>
@@ -91,6 +91,7 @@ export const ProofreadingInputForm = ({
                       );
                     }}
                     label={name}
+                    key={name}
                   ></CheckBox>
                 ))}
               </Stack>
