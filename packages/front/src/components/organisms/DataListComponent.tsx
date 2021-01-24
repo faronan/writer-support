@@ -7,9 +7,11 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
+  SimpleGrid,
 } from '@chakra-ui/react';
 import { CenterContainer } from '@/components/atoms/CenterContainer';
 import { InfoAlert } from '@/components/atoms/InfoAlert';
+import { PieGraph } from '@/components/atoms/PieGraph';
 import { DateFilterInputForm } from '@/components/molecules/DateFilterInputForm';
 import { DataTextExample } from '@/components/molecules/DataTextExample';
 import { DataLintRuleNames } from '@/components/molecules/DataLintRuleNames';
@@ -112,6 +114,10 @@ export const DataListComponent = () => {
     stateUpdate();
   }, [queryLoading, startDate, endDate, userSelect]);
 
+  const dataForGraph = ruleUsedCountList.map((dict) => {
+    return { name: LINT_RULES[dict['key']], value: dict['value'] };
+  });
+
   return (
     <CenterContainer>
       <DateFilterInputForm
@@ -126,27 +132,38 @@ export const DataListComponent = () => {
         }}
         selectOptions={['現在ログイン中のユーザー']}
       ></DateFilterInputForm>
-      {ruleUsedCountList.length > 0 ?
-      (<Accordion allowMultiple minW="full" border="1px" borderColor="gray.200">
-        {ruleUsedCountList.map((hash, index) => (
-          <AccordionItem key={index}>
-            <AccordionButton>
-              <DataLintRuleNames
-                rank={index + 1}
-                ruleNameView={LINT_RULES[hash.key]}
-                usedCount={hash.value}
-              ></DataLintRuleNames>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <DataTextExample
-                index={index}
-                lintExampleTextList={lintExampleTextList}
-              ></DataTextExample>
-            </AccordionPanel>
-          </AccordionItem>
-        ))}
-      </Accordion> ): <InfoAlert text="該当のデータはありません"></InfoAlert>}
+      {ruleUsedCountList.length > 0 ? (
+        <Accordion
+          allowMultiple
+          minW="full"
+          border="1px"
+          borderColor="gray.200"
+        >
+          {ruleUsedCountList.map((hash, index) => (
+            <AccordionItem key={index}>
+              <AccordionButton>
+                <DataLintRuleNames
+                  rank={index + 1}
+                  ruleNameView={LINT_RULES[hash.key]}
+                  usedCount={hash.value}
+                ></DataLintRuleNames>
+                <AccordionIcon />
+              </AccordionButton>
+              <AccordionPanel pb={4}>
+                <DataTextExample
+                  index={index}
+                  lintExampleTextList={lintExampleTextList}
+                ></DataTextExample>
+              </AccordionPanel>
+            </AccordionItem>
+          ))}
+          <SimpleGrid columns={2} mt={2}>
+            <PieGraph data={dataForGraph} />
+          </SimpleGrid>
+        </Accordion>
+      ) : (
+        <InfoAlert text="該当のデータはありません"></InfoAlert>
+      )}
     </CenterContainer>
   );
 };
