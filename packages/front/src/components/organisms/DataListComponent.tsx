@@ -10,6 +10,8 @@ import {
 } from '@chakra-ui/react';
 import { CenterContainer } from '@/components/atoms/CenterContainer';
 import { InfoAlert } from '@/components/atoms/InfoAlert';
+import { PieGraph } from '@/components/atoms/PieGraph';
+import { LineGraph } from '@/components/atoms/LineGraph';
 import { DateFilterInputForm } from '@/components/molecules/DateFilterInputForm';
 import { DataTextExample } from '@/components/molecules/DataTextExample';
 import { DataLintRuleNames } from '@/components/molecules/DataLintRuleNames';
@@ -25,22 +27,7 @@ export const DataListComponent = () => {
   const [startDate, setStartDate] = useState(oneMonthAgoDay);
   const [endDate, setEndDate] = useState(today);
 
-  type ruleToUsedCount = {
-    key: string;
-    value: any;
-  };
-  const [ruleUsedCountList, setRuleUsedCountList] = useState<ruleToUsedCount[]>(
-    [],
-  );
-
-  type lintResultText = {
-    targetLine: string;
-    lintResultColumn: number;
-  };
-  const [lintExampleTextList, setLintExampleTextList] = useState<
-    lintResultText[]
-  >([]);
-
+  const [proofreadingDataList, setProofreadingDataList] = useState([]);
   const [userSelect, setUserSelect] = useState('');
 
   const { loading: queryLoading, data: queryData } = useQuery(
@@ -59,50 +46,7 @@ export const DataListComponent = () => {
         startDate.toISOString() < data.createdAt &&
         data.createdAt < endDate.toISOString(),
     );
-
-    const ruleNames = dateFilterProofreadingDataList
-      .map((proofreadingData) =>
-        proofreadingData.result.map((result) => result.ruleName),
-      )
-      .flat();
-    const ruleUsedCountHash = ruleNames.reduce((dict, val) => {
-      dict[val] = (dict[val] || 0) + 1;
-      return dict;
-    }, {});
-    const sortedRuleUsedCountList = Object.keys(ruleUsedCountHash)
-      .map((e) => ({ key: e, value: ruleUsedCountHash[e] }))
-      .sort((a, b) => {
-        if (a.value < b.value) return 1;
-        if (a.value > b.value) return -1;
-        return 0;
-      });
-    setRuleUsedCountList(sortedRuleUsedCountList);
-
-    const lintExampleTexts = sortedRuleUsedCountList.map((hash) => {
-      const ruleName = hash.key;
-
-      const firstMatchProofreadingData = queryData.proofreadingDataList
-        .filter(
-          (data) =>
-            data.result.filter((result) => result.ruleName == ruleName).length >
-            0,
-        )
-        .sort((a, b) => {
-          if (a.createdAt < b.createdAt) return 1;
-          if (a.createdAt > b.createdAt) return -1;
-          return 0;
-        })[0];
-      const lintResult = firstMatchProofreadingData.result.filter(
-        (result) => result.ruleName == ruleName,
-      )[0];
-      const targetLine = firstMatchProofreadingData.text.split(/\r\n|\n|↵/)[
-        lintResult.line - 1
-      ];
-      const lintResultColumn = lintResult.column;
-
-      return { targetLine, lintResultColumn };
-    });
-    setLintExampleTextList(lintExampleTexts);
+    setProofreadingDataList(dateFilterProofreadingDataList);
   };
 
   useEffect(() => {
@@ -111,6 +55,74 @@ export const DataListComponent = () => {
     }
     stateUpdate();
   }, [queryLoading, startDate, endDate, userSelect]);
+
+  const ruleUsedCountHash = (() => {
+    const ruleNames = proofreadingDataList
+      .map((proofreadingData) =>
+        proofreadingData.result.map((result) => result.ruleName),
+      )
+      .flat();
+    const ruleUsedCountHash = ruleNames.reduce((dict, val) => {
+      dict[val] = (dict[val] || 0) + 1;
+      return dict;
+    }, {});
+    return ruleUsedCountHash;
+  })();
+
+  const ruleUsedCountList = Object.keys(ruleUsedCountHash)
+    .map((e) => ({ key: e, value: ruleUsedCountHash[e] }))
+    .sort((a, b) => {
+      if (a.value < b.value) return 1;
+      if (a.value > b.value) return -1;
+      return 0;
+    });
+
+  const lintExampleTextList = ruleUsedCountList.map((hash) => {
+    const ruleName = hash.key;
+    const firstMatchProofreadingData = queryData.proofreadingDataList
+      .filter(
+        (data) =>
+          data.result.filter((result) => result.ruleName == ruleName).length >
+          0,
+      )
+      .sort((a, b) => {
+        if (a.createdAt < b.createdAt) return 1;
+        if (a.createdAt > b.createdAt) return -1;
+        return 0;
+      })[0];
+    const lintResult = firstMatchProofreadingData.result.filter(
+      (result) => result.ruleName == ruleName,
+    )[0];
+    const targetLine = firstMatchProofreadingData.text.split(/\r\n|\n|↵/)[
+      lintResult.line - 1
+    ];
+    const lintResultColumn = lintResult.column;
+
+    return { targetLine, lintResultColumn };
+  });
+
+  const dataForPieGraph = ruleUsedCountList.map((dict) => {
+    return { name: LINT_RULES[dict['key']], value: dict['value'] };
+  });
+
+  const dataForLineGraph = (() => {
+    const names = Array.from(
+      new Set(proofreadingDataList.map((data) => data.createdAt.slice(0, 10))),
+    );
+
+    return names.reduce(
+      (array, name) =>
+        array.concat([
+          {
+            name: name,
+            value: proofreadingDataList.filter(
+              (data) => data.createdAt.indexOf(name) != -1,
+            ).length,
+          },
+        ]),
+      [],
+    );
+  })();
 
   return (
     <CenterContainer>
@@ -126,27 +138,37 @@ export const DataListComponent = () => {
         }}
         selectOptions={['現在ログイン中のユーザー']}
       ></DateFilterInputForm>
-      {ruleUsedCountList.length > 0 ?
-      (<Accordion allowMultiple minW="full" border="1px" borderColor="gray.200">
-        {ruleUsedCountList.map((hash, index) => (
-          <AccordionItem key={index}>
-            <AccordionButton>
-              <DataLintRuleNames
-                rank={index + 1}
-                ruleNameView={LINT_RULES[hash.key]}
-                usedCount={hash.value}
-              ></DataLintRuleNames>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <DataTextExample
-                index={index}
-                lintExampleTextList={lintExampleTextList}
-              ></DataTextExample>
-            </AccordionPanel>
-          </AccordionItem>
-        ))}
-      </Accordion> ): <InfoAlert text="該当のデータはありません"></InfoAlert>}
+      {ruleUsedCountList.length > 0 ? (
+        <Accordion
+          allowMultiple
+          minW="full"
+          border="1px"
+          borderColor="gray.200"
+        >
+          {ruleUsedCountList.map((hash, index) => (
+            <AccordionItem key={index}>
+              <AccordionButton>
+                <DataLintRuleNames
+                  rank={index + 1}
+                  ruleNameView={LINT_RULES[hash.key]}
+                  usedCount={hash.value}
+                ></DataLintRuleNames>
+                <AccordionIcon />
+              </AccordionButton>
+              <AccordionPanel pb={4}>
+                <DataTextExample
+                  index={index}
+                  lintExampleTextList={lintExampleTextList}
+                ></DataTextExample>
+              </AccordionPanel>
+            </AccordionItem>
+          ))}
+          <PieGraph data={dataForPieGraph} />
+          <LineGraph data={dataForLineGraph} />
+        </Accordion>
+      ) : (
+        <InfoAlert text="該当のデータはありません"></InfoAlert>
+      )}
     </CenterContainer>
   );
 };
