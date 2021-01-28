@@ -1,9 +1,13 @@
 import Head from 'next/head';
 
-export const AppHead = () => {
+type Props = {
+  title: string;
+};
+
+export const AppHead = ({ title }: Props) => {
   return (
     <Head>
-      <title>Text Checker</title>
+      <title>{title}</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
   );

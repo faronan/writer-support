@@ -1,8 +1,10 @@
-import { useSession } from 'next-auth/client';
 import { AuthSignIn } from '@/components/atoms/AuthSignIn';
 import { AuthSignOut } from '@/components/atoms/AuthSignOut';
 
-export const AuthComponent = () => {
-  const [session] = useSession();
-  return session ? <AuthSignOut></AuthSignOut> : <AuthSignIn></AuthSignIn>;
+type Props = {
+  isLogin: boolean;
+};
+
+export const AuthComponent = ({ isLogin }: Props) => {
+  return isLogin ? <AuthSignOut></AuthSignOut> : <AuthSignIn></AuthSignIn>;
 };
