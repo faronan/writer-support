@@ -52,7 +52,6 @@ export const ProofreadingComponent = () => {
       text: text,
       ruleNames: selectRuleNames,
       userEmail: session.user.email,
-      userName: session.user.name,
     };
     const response = await createProofreading({
       variables: { proofreading: proofreading },
