@@ -2,9 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Word {
+  wordId: ID!
+  wordText: String!
+  userId: Float!
+}
+
 type User {
   id: ID!
   proofreadingDataList: [ProofreadingData!]!
+  ngWords: [Word!]!
+  templateWords: [Word!]!
   name: String!
   email: String!
 }
@@ -33,15 +41,26 @@ scalar DateTime
 
 type Query {
   proofreadingDataList: [ProofreadingData!]!
+  findUser(userArgs: FindUserArgs!): User!
+}
+
+input FindUserArgs {
+  userEmail: String!
 }
 
 type Mutation {
   createProofreading(proofreading: AddProofreadingDataInput!): ProofreadingData!
+  createNgWord(wordInput: AddUserWordInput!): Word!
+  createTemplateWord(wordInput: AddUserWordInput!): Word!
 }
 
 input AddProofreadingDataInput {
   text: String!
   userEmail: String!
-  userName: String!
   ruleNames: [String!]!
+}
+
+input AddUserWordInput {
+  userEmail: String!
+  wordText: String!
 }
