@@ -15,7 +15,7 @@ export type Scalars = {
 };
 
 export type Word = {
-  __typename?: 'word';
+  __typename?: 'Word';
   wordId: Scalars['ID'];
   wordText: Scalars['String'];
   userId: Scalars['Float'];
@@ -69,6 +69,7 @@ export type FindUserArgs = {
 export type Mutation = {
   __typename?: 'Mutation';
   createProofreading: ProofreadingData;
+  createUser: User;
   createNgWord: Word;
   createTemplateWord: Word;
 };
@@ -76,6 +77,11 @@ export type Mutation = {
 
 export type MutationCreateProofreadingArgs = {
   proofreading: AddProofreadingDataInput;
+};
+
+
+export type MutationCreateUserArgs = {
+  userInput: AddUserInput;
 };
 
 
@@ -94,10 +100,28 @@ export type AddProofreadingDataInput = {
   ruleNames: Array<Scalars['String']>;
 };
 
+export type AddUserInput = {
+  userEmail: Scalars['String'];
+  userName: Scalars['String'];
+};
+
 export type AddUserWordInput = {
   userEmail: Scalars['String'];
   wordText: Scalars['String'];
 };
+
+export type CreateNgWordMutationVariables = Exact<{
+  wordInput: AddUserWordInput;
+}>;
+
+
+export type CreateNgWordMutation = (
+  { __typename?: 'Mutation' }
+  & { createNgWord: (
+    { __typename?: 'Word' }
+    & Pick<Word, 'wordText'>
+  ) }
+);
 
 export type CreateProofreadingMutationVariables = Exact<{
   proofreading: AddProofreadingDataInput;
@@ -113,6 +137,51 @@ export type CreateProofreadingMutation = (
       { __typename?: 'LintResult' }
       & Pick<LintResult, 'ruleName' | 'message' | 'line' | 'column'>
     )>> }
+  ) }
+);
+
+export type CreateTemplateWordMutationVariables = Exact<{
+  wordInput: AddUserWordInput;
+}>;
+
+
+export type CreateTemplateWordMutation = (
+  { __typename?: 'Mutation' }
+  & { createTemplateWord: (
+    { __typename?: 'Word' }
+    & Pick<Word, 'wordText'>
+  ) }
+);
+
+export type CreateUserMutationVariables = Exact<{
+  userInput: AddUserInput;
+}>;
+
+
+export type CreateUserMutation = (
+  { __typename?: 'Mutation' }
+  & { createUser: (
+    { __typename?: 'User' }
+    & Pick<User, 'name' | 'email'>
+  ) }
+);
+
+export type FindUserQueryVariables = Exact<{
+  userArgs: FindUserArgs;
+}>;
+
+
+export type FindUserQuery = (
+  { __typename?: 'Query' }
+  & { findUser: (
+    { __typename?: 'User' }
+    & { ngWords: Array<(
+      { __typename?: 'Word' }
+      & Pick<Word, 'wordText'>
+    )>, templateWords: Array<(
+      { __typename?: 'Word' }
+      & Pick<Word, 'wordText'>
+    )> }
   ) }
 );
 
@@ -135,5 +204,9 @@ export type ProofreadingDataListQuery = (
 );
 
 
+export const CreateNgWordDocument: DocumentNode<CreateNgWordMutation, CreateNgWordMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createNgWord"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"wordInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddUserWordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createNgWord"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"wordInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"wordInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wordText"}}]}}]}}]};
 export const CreateProofreadingDocument: DocumentNode<CreateProofreadingMutation, CreateProofreadingMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createProofreading"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"proofreading"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddProofreadingDataInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProofreading"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"proofreading"},"value":{"kind":"Variable","name":{"kind":"Name","value":"proofreading"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"result"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ruleName"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"line"}},{"kind":"Field","name":{"kind":"Name","value":"column"}}]}}]}}]}}]};
+export const CreateTemplateWordDocument: DocumentNode<CreateTemplateWordMutation, CreateTemplateWordMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createTemplateWord"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"wordInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddUserWordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTemplateWord"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"wordInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"wordInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wordText"}}]}}]}}]};
+export const CreateUserDocument: DocumentNode<CreateUserMutation, CreateUserMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]};
+export const FindUserDocument: DocumentNode<FindUserQuery, FindUserQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"findUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userArgs"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FindUserArgs"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userArgs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userArgs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ngWords"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wordText"}}]}},{"kind":"Field","name":{"kind":"Name","value":"templateWords"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wordText"}}]}}]}}]}}]};
 export const ProofreadingDataListDocument: DocumentNode<ProofreadingDataListQuery, ProofreadingDataListQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"proofreadingDataList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"proofreadingDataList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"result"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ruleName"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"line"}},{"kind":"Field","name":{"kind":"Name","value":"column"}}]}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]};

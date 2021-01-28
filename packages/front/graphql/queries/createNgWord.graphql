@@ -1,0 +1,5 @@
+mutation createNgWord($wordInput: AddUserWordInput!) {
+  createNgWord(wordInput: $wordInput) {
+    wordText
+  }
+}

@@ -1,0 +1,5 @@
+mutation createTemplateWord($wordInput: AddUserWordInput!) {
+  createTemplateWord(wordInput: $wordInput) {
+    wordText
+  }
+}

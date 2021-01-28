@@ -1,0 +1,10 @@
+query findUser($userArgs: FindUserArgs!) {
+  findUser(userArgs: $userArgs) {
+    ngWords {
+      wordText
+    }
+    templateWords {
+      wordText
+    }
+  }
+}
