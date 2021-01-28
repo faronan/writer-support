@@ -6,8 +6,6 @@ export class AddProofreadingDataInput {
   text: string;
   @Field((_type) => String)
   userEmail: string;
-  @Field((_type) => String)
-  userName: string;
   @Field((_type) => [String])
   ruleNames: string[];
 }

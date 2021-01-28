@@ -11,14 +11,16 @@ model User {
   id                   Int                @id @default(autoincrement())
   name                 String
   email                String             @unique
+  ngWords              NgWord[]
   proofreadingDataList ProofreadingData[]
+  templateWords        TemplateWord[]
 }
 
 model ProofreadingData {
   dataId    Int          @id @default(autoincrement())
   text      String?
-  userId    Int?
   createdAt DateTime     @default(now()) @map("created_at")
+  userId    Int?
   user      User?        @relation(fields: [userId], references: [id])
   result    LintResult[]
 
@@ -32,4 +34,24 @@ model LintResult {
   line                 Int
   column               Int
   proofreadingDataList ProofreadingData[]
+}
+
+model NgWord {
+  wordId   Int    @id @default(autoincrement())
+  wordText String
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id])
+
+  @@unique([wordText, userId], name: "userNgWord")
+  @@index([userId], name: "userId")
+}
+
+model TemplateWord {
+  wordId   Int    @id @default(autoincrement())
+  wordText String
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id])
+
+  @@unique([wordText, userId], name: "userTemplateWord")
+  @@index([userId], name: "userId")
 }

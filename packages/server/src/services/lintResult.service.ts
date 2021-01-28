@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { TextLintEngine } from 'textlint';
+import { TextlintMessage } from '@textlint/types';
 
 @Injectable()
 export class LintResultService {
-  async create(text: string, ruleNames: string[]) {
+  async execute(text: string, ruleNames: string[]) {
     const options = {
       rules: ruleNames,
       rulesConfig: ruleNames.reduce(
@@ -15,8 +16,13 @@ export class LintResultService {
 
     const results = await engine.executeOnText(text);
     const messages = results[0].messages;
+
+    return messages;
+  }
+
+  createPrismaDict(lintMessages: TextlintMessage[]) {
     const dict = {
-      create: messages.reduce(
+      create: lintMessages.reduce(
         (obj, message) =>
           obj.concat([
             {

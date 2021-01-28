@@ -14,10 +14,19 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type Word = {
+  __typename?: 'word';
+  wordId: Scalars['ID'];
+  wordText: Scalars['String'];
+  userId: Scalars['Float'];
+};
+
 export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
   proofreadingDataList: Array<ProofreadingData>;
+  ngWords: Array<Word>;
+  templateWords: Array<Word>;
   name: Scalars['String'];
   email: Scalars['String'];
 };
@@ -45,11 +54,23 @@ export type ProofreadingData = {
 export type Query = {
   __typename?: 'Query';
   proofreadingDataList: Array<ProofreadingData>;
+  findUser: User;
+};
+
+
+export type QueryFindUserArgs = {
+  userArgs: FindUserArgs;
+};
+
+export type FindUserArgs = {
+  userEmail: Scalars['String'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   createProofreading: ProofreadingData;
+  createNgWord: Word;
+  createTemplateWord: Word;
 };
 
 
@@ -57,11 +78,25 @@ export type MutationCreateProofreadingArgs = {
   proofreading: AddProofreadingDataInput;
 };
 
+
+export type MutationCreateNgWordArgs = {
+  wordInput: AddUserWordInput;
+};
+
+
+export type MutationCreateTemplateWordArgs = {
+  wordInput: AddUserWordInput;
+};
+
 export type AddProofreadingDataInput = {
   text: Scalars['String'];
   userEmail: Scalars['String'];
-  userName: Scalars['String'];
   ruleNames: Array<Scalars['String']>;
+};
+
+export type AddUserWordInput = {
+  userEmail: Scalars['String'];
+  wordText: Scalars['String'];
 };
 
 export type CreateProofreadingMutationVariables = Exact<{

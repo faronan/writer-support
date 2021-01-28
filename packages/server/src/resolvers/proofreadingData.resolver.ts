@@ -5,22 +5,21 @@ import { AddProofreadingDataInput } from '@/dto/proofreadingData.dto';
 
 @Resolver((of) => ProofreadingData)
 export class ProofreadingDataResolver {
-  constructor(private ProofreadingDataService: ProofreadingDataService) {}
+  constructor(private proofreadingDataService: ProofreadingDataService) {}
 
   @Query((returns) => [ProofreadingData])
   async proofreadingDataList() {
-    return await this.ProofreadingDataService.findMany();
+    return await this.proofreadingDataService.findMany();
   }
 
   @Mutation((returns) => ProofreadingData)
   async createProofreading(
     @Args('proofreading') proofreading: AddProofreadingDataInput,
   ) {
-    return await this.ProofreadingDataService.create(
+    return await this.proofreadingDataService.create(
       proofreading.text,
       proofreading.ruleNames,
       proofreading.userEmail,
-      proofreading.userName,
     );
   }
 }
