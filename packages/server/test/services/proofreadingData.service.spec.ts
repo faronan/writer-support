@@ -43,20 +43,32 @@ describe('ProofreadingDataService', () => {
       const testText = 'test';
       const testRules = ['testRule'];
       const testEmail = 'test@test.com';
-      const testName = 'testName';
       const testReturnUsers = {
-        connectOrCreate: {
-          where: { email: testEmail },
-          create: { email: testEmail, name: testName },
+        connect: {
+          email: testEmail,
         },
       };
 
-      const testReturnResults = { create: ['testResults'] };
+      const testReturnExecuteMessages = [
+        {
+          column: 1,
+          index: 1,
+          line: 1,
+          message: '',
+          ruleId: testRules[0],
+          severity: 1,
+          type: '',
+        },
+      ];
       const expectedArg = {
         data: {
           text: testText,
           user: testReturnUsers,
-          result: testReturnResults,
+          result: {
+            create: [
+              { column: 1, line: 1, message: '', ruleName: testRules[0] },
+            ],
+          },
         },
         include: {
           user: true,
@@ -64,23 +76,16 @@ describe('ProofreadingDataService', () => {
         },
       };
 
-      const UserServiceCreateMock = jest.fn(() =>
-        Promise.resolve(testReturnUsers),
-      );
-      userService['create'] = UserServiceCreateMock;
+      const UserServiceCreateMock = jest.fn(() => testReturnUsers);
+      userService['createPrismaDict'] = UserServiceCreateMock;
       const lintResultServiceCreateMock = jest.fn(() =>
-        Promise.resolve(testReturnResults),
+        Promise.resolve(testReturnExecuteMessages),
       );
-      lintResultService['create'] = lintResultServiceCreateMock;
+      lintResultService['execute'] = lintResultServiceCreateMock;
       const prismaCreateMock = jest.fn();
       prismaService.proofreadingData['create'] = prismaCreateMock;
 
-      await proofreadingDataService.create(
-        testText,
-        testRules,
-        testEmail,
-        testName,
-      );
+      await proofreadingDataService.create(testText, testRules, testEmail);
       expect(UserServiceCreateMock).toHaveBeenCalled();
       expect(lintResultServiceCreateMock).toHaveBeenCalled();
       expect(prismaCreateMock).toHaveBeenCalled();
