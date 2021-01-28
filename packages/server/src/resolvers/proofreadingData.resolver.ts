@@ -20,7 +20,6 @@ export class ProofreadingDataResolver {
       proofreading.text,
       proofreading.ruleNames,
       proofreading.userEmail,
-      proofreading.userName,
     );
   }
 }
