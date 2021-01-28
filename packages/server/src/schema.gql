@@ -50,6 +50,7 @@ input FindUserArgs {
 
 type Mutation {
   createProofreading(proofreading: AddProofreadingDataInput!): ProofreadingData!
+  createUser(userInput: AddUserInput!): User!
   createNgWord(wordInput: AddUserWordInput!): Word!
   createTemplateWord(wordInput: AddUserWordInput!): Word!
 }
@@ -58,6 +59,11 @@ input AddProofreadingDataInput {
   text: String!
   userEmail: String!
   ruleNames: [String!]!
+}
+
+input AddUserInput {
+  userEmail: String!
+  userName: String!
 }
 
 input AddUserWordInput {
