@@ -21,6 +21,9 @@ export class ProofreadingDataService {
   }
 
   async create(text: string, ruleNames: string[], userEmail: string) {
+    const user = this.userService.createPrismaDict(userEmail);
+    const message = await this.resultService.execute(text, ruleNames);
+    const result = this.resultService.createPrismaDict(message);
     const prismaProofreadingData = await this.prismaService.proofreadingData.create(
       {
         data: { text: text, user: user, result: result },
