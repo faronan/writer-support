@@ -10,7 +10,7 @@ export const AuthComponent = ({ isLogin }: Props) => {
     <TransparentBolderButton
       onClick={async (e) => {
         e.preventDefault();
-        await signOut();
+        await signOut({ callbackUrl: process.env.BASE_URL });
       }}
       text={'ログアウト'}
     ></TransparentBolderButton>
