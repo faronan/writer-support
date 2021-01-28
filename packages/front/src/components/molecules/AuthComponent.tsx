@@ -1,8 +1,35 @@
-import { useSession } from 'next-auth/client';
-import { AuthSignIn } from '@/components/atoms/AuthSignIn';
-import { AuthSignOut } from '@/components/atoms/AuthSignOut';
+import { signIn, signOut } from 'next-auth/client';
+import { TransparentBolderButton } from '@/components/atoms/TransparentBolderButton';
 
-export const AuthComponent = () => {
-  const [session] = useSession();
-  return session ? <AuthSignOut></AuthSignOut> : <AuthSignIn></AuthSignIn>;
+type Props = {
+  isLogin: boolean;
+};
+
+export const AuthComponent = ({ isLogin }: Props) => {
+  return isLogin ? (
+    <TransparentBolderButton
+      onClick={async (e) => {
+        e.preventDefault();
+        await signOut({ callbackUrl: process.env.BASE_URL });
+      }}
+      text={'ログアウト'}
+    ></TransparentBolderButton>
+  ) : (
+    <>
+      <TransparentBolderButton
+        onClick={async (e) => {
+          e.preventDefault();
+          await signIn('google');
+        }}
+        text={'ログイン'}
+      ></TransparentBolderButton>
+      <TransparentBolderButton
+        onClick={async (e) => {
+          e.preventDefault();
+          await signIn('credentials');
+        }}
+        text={'ゲストログイン'}
+      ></TransparentBolderButton>
+    </>
+  );
 };
