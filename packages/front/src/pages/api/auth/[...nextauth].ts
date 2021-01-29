@@ -8,14 +8,13 @@ const options = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     Providers.Credentials({
-      name: "Credential",
+      name: 'Credential',
       async authorize() {
-        const user = { name: 'ゲストユーザー', email: 'guest@example.com' }
-        return user
+        const user = { name: 'ゲストユーザー', email: 'guest@example.com' };
+        return user;
       },
-      credentials: {
-     }
-    })
+      credentials: {},
+    }),
   ],
 };
 

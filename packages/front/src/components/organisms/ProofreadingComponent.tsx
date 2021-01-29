@@ -1,11 +1,13 @@
-import { MouseEvent } from 'react';
-import { FetchResult, useMutation } from '@apollo/client';
+import { MouseEvent, useEffect } from 'react';
+import { FetchResult, useMutation, useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { useSession } from 'next-auth/client';
 import {
   AddProofreadingDataInput,
   CreateProofreadingDocument,
   CreateProofreadingMutation,
+  FindUserDocument,
+  CreateUserDocument,
 } from '@graphql/graphql-operations';
 import { CenterContainer } from '@/components/atoms/CenterContainer';
 import { SuccessAlert } from '@/components/atoms/SuccessAlert';
@@ -23,6 +25,27 @@ export const ProofreadingComponent = () => {
   const [text, setText] = useState('');
   const [session] = useSession();
   const [createProofreading] = useMutation(CreateProofreadingDocument);
+  const { loading: userFindQueryLoading, data: userFindQueryData } = useQuery(
+    FindUserDocument,
+    {
+      variables: { userArgs: { userEmail: session.user.email } },
+    },
+  );
+  const [createUser] = useMutation(CreateUserDocument);
+
+  useEffect(() => {
+    if (userFindQueryLoading || userFindQueryData) {
+      return;
+    }
+    createUser({
+      variables: {
+        userInput: {
+          userEmail: session.user.email,
+          userName: session.user.name,
+        },
+      },
+    });
+  }, [userFindQueryLoading]);
 
   const [checkedItems, setCheckedItems] = useState(
     new Array<boolean>(Object.keys(LINT_RULES).length).fill(false),
@@ -84,21 +107,22 @@ export const ProofreadingComponent = () => {
         ]}
       ></ProofreadingInputForm>
 
-      {response.data && (
-        proofreadResults.length > 0 ?
-        <>
-          <SuccessAlert text={'校正結果です'}></SuccessAlert>
-          <ProofreadingResultText
-            splitResponseTexts={splitResponseText}
-            proofreadResults={proofreadResults}
-          ></ProofreadingResultText>
-          <ProofreadingResultTable
-            splitResponseTexts={splitResponseText}
-            proofreadResults={proofreadResults}
-          ></ProofreadingResultTable>
-        </>:
+      {response.data &&
+        (proofreadResults.length > 0 ? (
+          <>
+            <SuccessAlert text={'校正結果です'}></SuccessAlert>
+            <ProofreadingResultText
+              splitResponseTexts={splitResponseText}
+              proofreadResults={proofreadResults}
+            ></ProofreadingResultText>
+            <ProofreadingResultTable
+              splitResponseTexts={splitResponseText}
+              proofreadResults={proofreadResults}
+            ></ProofreadingResultTable>
+          </>
+        ) : (
           <SuccessAlert text={'問題ありません🎉'}></SuccessAlert>
-      )}
+        ))}
     </CenterContainer>
   );
 };
