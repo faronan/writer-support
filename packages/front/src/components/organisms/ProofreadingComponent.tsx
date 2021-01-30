@@ -8,12 +8,16 @@ import {
   CreateProofreadingMutation,
   FindUserDocument,
   CreateUserDocument,
+  CreateNgWordDocument,
+  CreateTemplateWordDocument,
 } from '@graphql/graphql-operations';
 import { CenterContainer } from '@/components/atoms/CenterContainer';
 import { SuccessAlert } from '@/components/atoms/SuccessAlert';
 import { ProofreadingInputForm } from '@/components/molecules/ProofreadingInputForm';
 import { ProofreadingResultText } from '@/components/molecules/ProofreadingResultText';
 import { ProofreadingResultTable } from '@/components/molecules/ProofreadingResultTable';
+import { CollapseText } from '@/components/molecules/CollapseText';
+
 import {
   LINT_RULES,
   BASE_RULES,
@@ -32,6 +36,8 @@ export const ProofreadingComponent = () => {
     },
   );
   const [createUser] = useMutation(CreateUserDocument);
+  const [createNgWord] = useMutation(CreateNgWordDocument);
+  const [createTemplateWord] = useMutation(CreateTemplateWordDocument);
 
   useEffect(() => {
     if (userFindQueryLoading || userFindQueryData) {
@@ -92,6 +98,10 @@ export const ProofreadingComponent = () => {
 
   return (
     <CenterContainer>
+      <CollapseText text={'スニペット機能'}>
+        {/* TODO: テンプレワード */}
+      </CollapseText>
+      <CollapseText text={'NGワード機能'}>{/* TODO: NGワード */}</CollapseText>
       <ProofreadingInputForm
         inputText={text}
         textAreaOnChange={(e) => {
