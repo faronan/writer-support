@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { HStack, Collapse, Icon, Text, useDisclosure } from '@chakra-ui/react';
 import { ChevronRightIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { NoBorderBox } from '@/components/atoms/NoBorderBox';
 
 type Props = {
   text: string;
@@ -10,7 +11,7 @@ type Props = {
 export const CollapseText = ({ text, children }: Props) => {
   const { isOpen, onToggle } = useDisclosure();
   return (
-    <>
+    <NoBorderBox>
       <HStack width="full">
         <Icon
           as={isOpen ? ChevronDownIcon : ChevronRightIcon}
@@ -23,6 +24,6 @@ export const CollapseText = ({ text, children }: Props) => {
       <Collapse in={isOpen} animateOpacity>
         {children}
       </Collapse>
-    </>
+    </NoBorderBox>
   );
 };

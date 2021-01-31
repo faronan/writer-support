@@ -10,6 +10,7 @@ import {
   CreateUserDocument,
   CreateNgWordDocument,
   CreateTemplateWordDocument,
+  Word,
 } from '@graphql/graphql-operations';
 import { CenterContainer } from '@/components/atoms/CenterContainer';
 import { SuccessAlert } from '@/components/atoms/SuccessAlert';
@@ -17,6 +18,7 @@ import { ProofreadingInputForm } from '@/components/molecules/ProofreadingInputF
 import { ProofreadingResultText } from '@/components/molecules/ProofreadingResultText';
 import { ProofreadingResultTable } from '@/components/molecules/ProofreadingResultTable';
 import { CollapseText } from '@/components/molecules/CollapseText';
+import { UserWords } from '@/components/molecules/UserWords';
 
 import {
   LINT_RULES,
@@ -40,7 +42,12 @@ export const ProofreadingComponent = () => {
   const [createTemplateWord] = useMutation(CreateTemplateWordDocument);
 
   useEffect(() => {
-    if (userFindQueryLoading || userFindQueryData) {
+    if (userFindQueryLoading) {
+      return;
+    }
+    if (userFindQueryData) {
+      setTemplateWords(userFindQueryData.findUser.templateWords);
+      setNgWords(userFindQueryData.findUser.ngWords);
       return;
     }
     createUser({
@@ -56,6 +63,12 @@ export const ProofreadingComponent = () => {
   const [checkedItems, setCheckedItems] = useState(
     new Array<boolean>(Object.keys(LINT_RULES).length).fill(false),
   );
+
+  type userWords = {
+    __typename?: 'Word';
+  } & Pick<Word, 'wordText'>[];
+  const [templateWords, setTemplateWords] = useState<userWords>([]);
+  const [ngWords, setNgWords] = useState<userWords>([]);
 
   type createProofreadingResult = FetchResult<
     CreateProofreadingMutation,
@@ -99,9 +112,26 @@ export const ProofreadingComponent = () => {
   return (
     <CenterContainer>
       <CollapseText text={'スニペット機能'}>
-        {/* TODO: テンプレワード */}
+        <UserWords
+          words={templateWords}
+          createWord={(word) => {
+            createTemplateWord({
+              variables: {
+                wordInput: {
+                  wordText: word,
+                  userEmail: session.user.email,
+                },
+              },
+            });
+            setTemplateWords(templateWords.concat([{ wordText: word }]));
+          }}
+          wordType={'template'}
+          description={'使用頻度の高いワードを登録してください'}
+        ></UserWords>
       </CollapseText>
-      <CollapseText text={'NGワード機能'}>{/* TODO: NGワード */}</CollapseText>
+      <CollapseText text={'NGワード機能'}>
+
+      </CollapseText>
       <ProofreadingInputForm
         inputText={text}
         textAreaOnChange={(e) => {
