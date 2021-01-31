@@ -13,6 +13,7 @@ import { InputTextarea } from '@/components/atoms/InputTextarea';
 import { ColorCheckBox } from '@/components/atoms/ColorCheckBox';
 import { CheckBox } from '@/components/atoms/CheckBox';
 import { BlueButton } from '@/components/atoms/BlueButton';
+import { WarningAlert } from '@/components/atoms/WarningAlert';
 
 type Props = {
   inputText: string;
@@ -21,6 +22,7 @@ type Props = {
   checkBoxItems: boolean[];
   setCheckBoxItems: (value: SetStateAction<boolean[]>) => void;
   ruleNames: string[][];
+  isNgAlertShow: boolean;
 };
 
 export const ProofreadingInputForm = ({
@@ -30,6 +32,7 @@ export const ProofreadingInputForm = ({
   checkBoxItems,
   setCheckBoxItems,
   ruleNames,
+  isNgAlertShow,
 }: Props) => {
   const getIndex = (name: string) => {
     return ruleNames
@@ -61,6 +64,9 @@ export const ProofreadingInputForm = ({
         onChange={textAreaOnChange}
         placeholder="ここに文章を入力してください"
       ></InputTextarea>
+      {isNgAlertShow && (
+        <WarningAlert text="NGワードが含まれています！"></WarningAlert>
+      )}
       <Tabs mt={10} minH="xs" variant="enclosed">
         <TabList>
           <Tab>基本ルール</Tab>

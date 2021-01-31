@@ -69,6 +69,7 @@ export const ProofreadingComponent = () => {
   } & Pick<Word, 'wordText'>[];
   const [templateWords, setTemplateWords] = useState<userWords>([]);
   const [ngWords, setNgWords] = useState<userWords>([]);
+  const [isNgAlertShow, setIsNgAlertShow] = useState(false);
 
   type createProofreadingResult = FetchResult<
     CreateProofreadingMutation,
@@ -130,12 +131,32 @@ export const ProofreadingComponent = () => {
         ></UserWords>
       </CollapseText>
       <CollapseText text={'NGワード機能'}>
-
+        <UserWords
+          words={ngWords}
+          createWord={(word) => {
+            createNgWord({
+              variables: {
+                wordInput: {
+                  wordText: word,
+                  userEmail: session.user.email,
+                },
+              },
+            });
+            setNgWords(ngWords.concat([{ wordText: word }]));
+          }}
+          wordType={'ng'}
+          description={'文章に含めたくないワードを登録してください'}
+        ></UserWords>
       </CollapseText>
       <ProofreadingInputForm
         inputText={text}
         textAreaOnChange={(e) => {
-          setText(e.target.value);
+          const text = e.target.value;
+          setText(text);
+          const isIncludeNgWord = ngWords
+            .map((word) => text.includes(word.wordText))
+            .some((bool) => bool);
+          setIsNgAlertShow(isIncludeNgWord);
         }}
         buttonOnClick={proofreadingButtonOnClick}
         checkBoxItems={checkedItems}
@@ -145,6 +166,7 @@ export const ProofreadingComponent = () => {
           Object.values(CHECK_RULES),
           Object.values(QUALITY_RULES),
         ]}
+        isNgAlertShow={isNgAlertShow}
       ></ProofreadingInputForm>
 
       {response.data &&
