@@ -47,6 +47,7 @@ describe(`Home`, () => {
       </MockedProvider>,
     );
 
+    //TODO: 他のヘッダーの表示 + ログアウト押した後の遷移もテスト
     expect(
       screen.getByRole('button', {
         name: /ログアウト/i,
