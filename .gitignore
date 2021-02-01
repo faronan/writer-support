@@ -36,3 +36,4 @@ lerna-debug.log*
 # DB
 .env
 mysql/
+.vercel
