@@ -21,7 +21,7 @@ services:
     command: 'sh ../../docker/start.sh'
     ports:
       - '5555:5555'
-      - '8888:8888'
+      - '8080:8080'
     tty: true
     depends_on:
       - db
