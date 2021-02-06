@@ -28,6 +28,9 @@ import {
   CHECK_RULES,
   QUALITY_RULES,
 } from '@/lib/RuleNameData';
+import {
+  SAMPLE_TEXT
+} from '@/lib/SampleTextData';
 
 export const ProofreadingComponent = () => {
   const [text, setText] = useState('');
@@ -124,7 +127,10 @@ export const ProofreadingComponent = () => {
             .some((bool) => bool);
           setIsNgAlertShow(isIncludeNgWord);
         }}
-        buttonOnClick={proofreadingButtonOnClick}
+        inputSampleText={()=>{
+          setText(SAMPLE_TEXT);
+        }}
+        submitButtonOnClick={proofreadingButtonOnClick}
         checkBoxItems={checkedItems}
         setCheckBoxItems={setCheckedItems}
         ruleNames={[
