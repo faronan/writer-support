@@ -1,15 +1,9 @@
 import { ChangeEvent, MouseEvent, SetStateAction } from 'react';
-import {
-  Stack,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-} from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import { BorderBox } from '@/components/atoms/BorderBox';
 import { EditIcon } from '@chakra-ui/icons';
 import { InputTextarea } from '@/components/atoms/InputTextarea';
+import { ShortIntervalStack } from '@/components/atoms/ShortIntervalStack';
 import { ColorCheckBox } from '@/components/atoms/ColorCheckBox';
 import { CheckBox } from '@/components/atoms/CheckBox';
 import { BlueButton } from '@/components/atoms/BlueButton';
@@ -76,7 +70,7 @@ export const ProofreadingInputForm = ({
         <TabPanels>
           {ruleNames.map((names, index) => (
             <TabPanel key={index}>
-              <Stack spacing={1}>
+              <ShortIntervalStack>
                 <ColorCheckBox
                   isChecked={getBulkCheckboxIsChecked(index)}
                   onChange={(e) => {
@@ -100,7 +94,7 @@ export const ProofreadingInputForm = ({
                     key={name}
                   ></CheckBox>
                 ))}
-              </Stack>
+              </ShortIntervalStack>
             </TabPanel>
           ))}
         </TabPanels>

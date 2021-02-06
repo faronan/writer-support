@@ -12,7 +12,8 @@ import {
   CreateTemplateWordDocument,
   Word,
 } from '@graphql/graphql-operations';
-import { CenterContainer } from '@/components/atoms/CenterContainer';
+import { HalfGrid } from '@/components/atoms/HalfGrid';
+import { ShortIntervalStack } from '@/components/atoms/ShortIntervalStack';
 import { SuccessAlert } from '@/components/atoms/SuccessAlert';
 import { ProofreadingInputForm } from '@/components/molecules/ProofreadingInputForm';
 import { ProofreadingResultText } from '@/components/molecules/ProofreadingResultText';
@@ -111,43 +112,7 @@ export const ProofreadingComponent = () => {
     : [];
 
   return (
-    <CenterContainer>
-      <CollapseText text={'スニペット機能'}>
-        <UserWords
-          words={templateWords}
-          createWord={(word) => {
-            createTemplateWord({
-              variables: {
-                wordInput: {
-                  wordText: word,
-                  userEmail: session.user.email,
-                },
-              },
-            });
-            setTemplateWords(templateWords.concat([{ wordText: word }]));
-          }}
-          wordType={'template'}
-          description={'使用頻度の高いワードを登録してください'}
-        ></UserWords>
-      </CollapseText>
-      <CollapseText text={'NGワード機能'}>
-        <UserWords
-          words={ngWords}
-          createWord={(word) => {
-            createNgWord({
-              variables: {
-                wordInput: {
-                  wordText: word,
-                  userEmail: session.user.email,
-                },
-              },
-            });
-            setNgWords(ngWords.concat([{ wordText: word }]));
-          }}
-          wordType={'ng'}
-          description={'文章に含めたくないワードを登録してください'}
-        ></UserWords>
-      </CollapseText>
+    <HalfGrid>
       <ProofreadingInputForm
         inputText={text}
         textAreaOnChange={(e) => {
@@ -168,23 +133,60 @@ export const ProofreadingComponent = () => {
         ]}
         isNgAlertShow={isNgAlertShow}
       ></ProofreadingInputForm>
-
-      {response.data &&
-        (proofreadResults.length > 0 ? (
-          <>
-            <SuccessAlert text={'校正結果です'}></SuccessAlert>
-            <ProofreadingResultText
-              splitResponseTexts={splitResponseText}
-              proofreadResults={proofreadResults}
-            ></ProofreadingResultText>
-            <ProofreadingResultTable
-              splitResponseTexts={splitResponseText}
-              proofreadResults={proofreadResults}
-            ></ProofreadingResultTable>
-          </>
-        ) : (
-          <SuccessAlert text={'問題ありません🎉'}></SuccessAlert>
-        ))}
-    </CenterContainer>
+      <ShortIntervalStack>
+        {response.data &&
+          (proofreadResults.length > 0 ? (
+            <>
+              <SuccessAlert text={'校正結果です'}></SuccessAlert>
+              <ProofreadingResultText
+                splitResponseTexts={splitResponseText}
+                proofreadResults={proofreadResults}
+              ></ProofreadingResultText>
+              <ProofreadingResultTable
+                splitResponseTexts={splitResponseText}
+                proofreadResults={proofreadResults}
+              ></ProofreadingResultTable>
+            </>
+          ) : (
+            <SuccessAlert text={'問題ありません🎉'}></SuccessAlert>
+          ))}
+        <CollapseText text={'スニペット機能'}>
+          <UserWords
+            words={templateWords}
+            createWord={(word) => {
+              createTemplateWord({
+                variables: {
+                  wordInput: {
+                    wordText: word,
+                    userEmail: session.user.email,
+                  },
+                },
+              });
+              setTemplateWords(templateWords.concat([{ wordText: word }]));
+            }}
+            wordType={'template'}
+            description={'使用頻度の高いワードを登録してください'}
+          ></UserWords>
+        </CollapseText>
+        <CollapseText text={'NGワード機能'}>
+          <UserWords
+            words={ngWords}
+            createWord={(word) => {
+              createNgWord({
+                variables: {
+                  wordInput: {
+                    wordText: word,
+                    userEmail: session.user.email,
+                  },
+                },
+              });
+              setNgWords(ngWords.concat([{ wordText: word }]));
+            }}
+            wordType={'ng'}
+            description={'文章に含めたくないワードを登録してください'}
+          ></UserWords>
+        </CollapseText>
+      </ShortIntervalStack>
+    </HalfGrid>
   );
 };
