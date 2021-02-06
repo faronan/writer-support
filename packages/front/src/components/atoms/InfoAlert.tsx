@@ -6,7 +6,7 @@ type Props = {
 
 export const InfoAlert = ({ text }: Props) => {
   return (
-    <Alert mt={10} status="info">
+    <Alert mt={5} status="info">
       <AlertIcon />
       {text}
     </Alert>

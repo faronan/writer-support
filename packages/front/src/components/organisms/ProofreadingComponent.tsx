@@ -15,6 +15,7 @@ import {
 import { HalfGrid } from '@/components/atoms/HalfGrid';
 import { ShortIntervalStack } from '@/components/atoms/ShortIntervalStack';
 import { SuccessAlert } from '@/components/atoms/SuccessAlert';
+import { WarningAlert } from '@/components/atoms/WarningAlert';
 import { ProofreadingInputForm } from '@/components/molecules/ProofreadingInputForm';
 import { ProofreadingResultText } from '@/components/molecules/ProofreadingResultText';
 import { ProofreadingResultTable } from '@/components/molecules/ProofreadingResultTable';
@@ -137,7 +138,9 @@ export const ProofreadingComponent = () => {
         {response.data &&
           (proofreadResults.length > 0 ? (
             <>
-              <SuccessAlert text={'校正結果です'}></SuccessAlert>
+              <WarningAlert
+                text={`${proofreadResults.length}箇所の文法ミスが見つかりました`}
+              ></WarningAlert>
               <ProofreadingResultText
                 splitResponseTexts={splitResponseText}
                 proofreadResults={proofreadResults}
