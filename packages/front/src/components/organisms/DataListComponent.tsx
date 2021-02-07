@@ -8,7 +8,9 @@ import {
   AccordionIcon,
   AccordionPanel,
 } from '@chakra-ui/react';
-import { CenterContainer } from '@/components/atoms/CenterContainer';
+import { HalfGrid } from '@/components/atoms/HalfGrid';
+import { ShortIntervalStack } from '@/components/atoms/ShortIntervalStack';
+import { HeadingText } from '@/components/atoms/HeadingText';
 import { InfoAlert } from '@/components/atoms/InfoAlert';
 import { PieGraph } from '@/components/atoms/PieGraph';
 import { LineGraph } from '@/components/atoms/LineGraph';
@@ -115,9 +117,9 @@ export const DataListComponent = () => {
         array.concat([
           {
             name: name,
-            value: proofreadingDataList.filter(
-              (data) => data.createdAt.indexOf(name) != -1,
-            ).length,
+            value: proofreadingDataList
+              .filter((data) => data.createdAt.indexOf(name) != -1)
+              .reduce((sum, data) => sum + data.result.length, 0),
           },
         ]),
       [],
@@ -125,7 +127,7 @@ export const DataListComponent = () => {
   })();
 
   return (
-    <CenterContainer>
+    <ShortIntervalStack>
       <DateFilterInputForm
         startSelectedDate={startDate}
         startOnChange={setStartDate}
@@ -136,39 +138,52 @@ export const DataListComponent = () => {
           e.preventDefault();
           setUserSelect(e.target.value);
         }}
-        selectOptions={['現在ログイン中のユーザー']}
+        selectOptions={[`現在ログイン中のユーザー(${session.user.email})`]}
       ></DateFilterInputForm>
-      {ruleUsedCountList.length > 0 ? (
-        <Accordion
-          allowMultiple
-          minW="full"
-          border="1px"
-          borderColor="gray.200"
-        >
-          {ruleUsedCountList.map((hash, index) => (
-            <AccordionItem key={index}>
-              <AccordionButton>
-                <DataLintRuleNames
-                  rank={index + 1}
-                  ruleNameView={LINT_RULES[hash.key]}
-                  usedCount={hash.value}
-                ></DataLintRuleNames>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel pb={4}>
-                <DataTextExample
-                  index={index}
-                  lintExampleTextList={lintExampleTextList}
-                ></DataTextExample>
-              </AccordionPanel>
-            </AccordionItem>
-          ))}
-          <PieGraph data={dataForPieGraph} />
-          <LineGraph data={dataForLineGraph} />
-        </Accordion>
-      ) : (
-        <InfoAlert text="該当のデータはありません"></InfoAlert>
-      )}
-    </CenterContainer>
+      <HalfGrid>
+        <ShortIntervalStack>
+          {ruleUsedCountList.length > 0 ? (
+            <>
+              <HeadingText text="間違えやすい文法"></HeadingText>
+              <Accordion
+                allowMultiple
+                minW="full"
+                border="1px"
+                borderColor="gray.200"
+              >
+                {ruleUsedCountList.map((hash, index) => (
+                  <AccordionItem key={index}>
+                    <AccordionButton>
+                      <DataLintRuleNames
+                        rank={index + 1}
+                        ruleNameView={LINT_RULES[hash.key]}
+                        usedCount={hash.value}
+                      ></DataLintRuleNames>
+                      <AccordionIcon />
+                    </AccordionButton>
+                    <AccordionPanel pb={4}>
+                      <DataTextExample
+                        index={index}
+                        lintExampleTextList={lintExampleTextList}
+                      ></DataTextExample>
+                    </AccordionPanel>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </>
+          ) : (
+            <InfoAlert text="該当のデータはありません"></InfoAlert>
+          )}
+        </ShortIntervalStack>
+        {ruleUsedCountList.length > 0 && (
+          <ShortIntervalStack>
+            <HeadingText text="文法ミスの内訳"></HeadingText>
+            <PieGraph data={dataForPieGraph} />
+            <HeadingText text="期間別の推移"></HeadingText>
+            <LineGraph data={dataForLineGraph} />
+          </ShortIntervalStack>
+        )}
+      </HalfGrid>
+    </ShortIntervalStack>
   );
 };

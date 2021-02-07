@@ -1,5 +1,4 @@
 import { Table, Tbody, Tr, Td } from '@chakra-ui/react';
-import { BorderBox } from '@/components/atoms/BorderBox';
 import { RedCode } from '@/components/atoms/RedCode';
 import { LintResult } from '@graphql/graphql-operations';
 
@@ -15,22 +14,20 @@ export const ProofreadingResultTable = ({
   proofreadResults,
 }: Props) => {
   return (
-    <BorderBox>
-      <Table variant="simple">
-        <Tbody>
-          {proofreadResults.map((v, index) => (
-            <Tr key={index}>
-              <Td width="20%">{`${v.line}行目`}</Td>
-              <Td width="10%">
-                <RedCode
-                  text={splitResponseTexts[v.line - 1][v.column - 1]}
-                ></RedCode>
-              </Td>
-              <Td width="70%">{v.message}</Td>
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </BorderBox>
+    <Table border="1px" borderColor="gray.200">
+      <Tbody>
+        {proofreadResults.map((v, index) => (
+          <Tr key={index}>
+            <Td width="20%">{`${v.line}行目`}</Td>
+            <Td width="10%">
+              <RedCode
+                text={splitResponseTexts[v.line - 1][v.column - 1]}
+              ></RedCode>
+            </Td>
+            <Td width="70%">{v.message}</Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   );
 };

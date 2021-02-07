@@ -1,24 +1,22 @@
 import { ChangeEvent, MouseEvent, SetStateAction } from 'react';
-import {
-  Stack,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-} from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import { BorderBox } from '@/components/atoms/BorderBox';
 import { EditIcon } from '@chakra-ui/icons';
+import { ShortIntervalHStack } from '@/components/atoms/ShortIntervalHStack';
+import { ClickableText } from '@/components/atoms/ClickableText';
 import { InputTextarea } from '@/components/atoms/InputTextarea';
+import { ShortIntervalStack } from '@/components/atoms/ShortIntervalStack';
 import { ColorCheckBox } from '@/components/atoms/ColorCheckBox';
 import { CheckBox } from '@/components/atoms/CheckBox';
 import { BlueButton } from '@/components/atoms/BlueButton';
 import { WarningAlert } from '@/components/atoms/WarningAlert';
+import { VariableNode } from 'graphql';
 
 type Props = {
   inputText: string;
   textAreaOnChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  buttonOnClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  inputSampleText: () => void;
+  submitButtonOnClick: (e: MouseEvent<HTMLButtonElement>) => void;
   checkBoxItems: boolean[];
   setCheckBoxItems: (value: SetStateAction<boolean[]>) => void;
   ruleNames: string[][];
@@ -28,7 +26,8 @@ type Props = {
 export const ProofreadingInputForm = ({
   inputText,
   textAreaOnChange,
-  buttonOnClick,
+  inputSampleText,
+  submitButtonOnClick,
   checkBoxItems,
   setCheckBoxItems,
   ruleNames,
@@ -58,7 +57,13 @@ export const ProofreadingInputForm = ({
 
   return (
     <BorderBox>
-      <EditIcon mb={2}></EditIcon>
+      <ShortIntervalHStack>
+        <EditIcon mb={2}></EditIcon>
+        <ClickableText
+          onClick={inputSampleText}
+          text={'サンプルテキストを入力'}
+        ></ClickableText>
+      </ShortIntervalHStack>
       <InputTextarea
         value={inputText}
         onChange={textAreaOnChange}
@@ -76,7 +81,7 @@ export const ProofreadingInputForm = ({
         <TabPanels>
           {ruleNames.map((names, index) => (
             <TabPanel key={index}>
-              <Stack spacing={1}>
+              <ShortIntervalStack>
                 <ColorCheckBox
                   isChecked={getBulkCheckboxIsChecked(index)}
                   onChange={(e) => {
@@ -100,12 +105,12 @@ export const ProofreadingInputForm = ({
                     key={name}
                   ></CheckBox>
                 ))}
-              </Stack>
+              </ShortIntervalStack>
             </TabPanel>
           ))}
         </TabPanels>
       </Tabs>
-      <BlueButton onClick={buttonOnClick} text="送信"></BlueButton>
+      <BlueButton onClick={submitButtonOnClick} text="送信"></BlueButton>
     </BorderBox>
   );
 };

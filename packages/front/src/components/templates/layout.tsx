@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { useSession } from 'next-auth/client';
 import { AppHead } from '@/components/atoms/AppHead';
 import { AppHeader } from '@/components/organisms/AppHeader';
-import { LoadingText } from '@/components/atoms/LoadingText';
+import { LoadingSpinner } from '@/components/atoms/LoadingSpinner';
 
 type Props = {
   isLoading?: boolean;
@@ -20,7 +20,11 @@ export const Layout = ({ isLoading = false, children }: Props) => {
         <AppHeader title={TITLE} isLogin={session != null}></AppHeader>
       </header>
       <main>
-        {isLoading || sessionLoading ? <LoadingText></LoadingText> : children}
+        {isLoading || sessionLoading ? (
+          <LoadingSpinner></LoadingSpinner>
+        ) : (
+          children
+        )}
       </main>
     </div>
   );

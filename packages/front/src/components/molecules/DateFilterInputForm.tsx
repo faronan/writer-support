@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
-import { FormControl, FormLabel, HStack, Select } from '@chakra-ui/react';
+import { FormControl, FormLabel, Select } from '@chakra-ui/react';
 import { CalendarIcon } from '@chakra-ui/icons';
+import { ShortIntervalHStack } from '@/components/atoms/ShortIntervalHStack';
 import { BorderBox } from '@/components/atoms/BorderBox';
 import { Calender } from '@/components/atoms/Calender';
 
@@ -25,7 +26,7 @@ export const DateFilterInputForm = ({
 }: Props) => {
   return (
     <BorderBox>
-      <HStack>
+      <ShortIntervalHStack>
         <FormControl>
           <FormLabel>開始日</FormLabel>
           <CalendarIcon mr={3} mb={1} />
@@ -45,7 +46,7 @@ export const DateFilterInputForm = ({
             onChange={endOnChange}
           ></Calender>
         </FormControl>
-      </HStack>
+      </ShortIntervalHStack>
       <FormControl mt={5}>
         <FormLabel>対象のユーザー</FormLabel>
         <Select
