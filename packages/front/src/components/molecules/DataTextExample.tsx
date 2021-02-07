@@ -14,6 +14,7 @@ type Props = {
 export const DataTextExample = ({ index, lintExampleTextList }: Props) => {
   const targetLine = lintExampleTextList[index].targetLine;
   const lintResultColumn = lintExampleTextList[index].lintResultColumn;
+
   return (
     <>
       <BoldText text={'例'}></BoldText>
@@ -22,12 +23,7 @@ export const DataTextExample = ({ index, lintExampleTextList }: Props) => {
           text={targetLine.slice(0, lintResultColumn - 1)}
         ></NormalCode>
         <RedCode text={targetLine[lintResultColumn - 1]}></RedCode>
-        <NormalCode
-          text={targetLine.slice(
-            lintResultColumn,
-            targetLine.indexOf('。') + 1,
-          )}
-        ></NormalCode>
+        <NormalCode text={targetLine.slice(lintResultColumn)}></NormalCode>
       </NoBorderBox>
     </>
   );
