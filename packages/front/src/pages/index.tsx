@@ -1,5 +1,10 @@
 import { Layout } from '@/components/templates/layout';
+import { TopPage } from '@/components/organisms/TopPage';
 
 export default function Home() {
-  return <Layout>{/* TODO: TOPにいい感じのページ作る */}</Layout>;
+  return (
+    <Layout>
+      <TopPage></TopPage>
+    </Layout>
+  );
 }
