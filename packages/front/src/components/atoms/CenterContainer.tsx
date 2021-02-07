@@ -5,5 +5,9 @@ type Props = {
 };
 
 export const CenterContainer = ({ children }: Props) => {
-  return <Container centerContent>{children}</Container>;
+  return (
+    <Container centerContent maxW="100%">
+      {children}
+    </Container>
+  );
 };
