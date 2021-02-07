@@ -11,7 +11,7 @@ type Props = {
 
 export const Layout = ({ isLoading = false, children }: Props) => {
   const [session, sessionLoading] = useSession();
-  const TITLE = 'Write Support';
+  const TITLE = 'Writer Support';
   return (
     <div className="page">
       <AppHead title={TITLE}></AppHead>
