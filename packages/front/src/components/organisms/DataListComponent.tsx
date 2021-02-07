@@ -117,9 +117,9 @@ export const DataListComponent = () => {
         array.concat([
           {
             name: name,
-            value: proofreadingDataList.filter(
-              (data) => data.createdAt.indexOf(name) != -1,
-            ).length,
+            value: proofreadingDataList
+              .filter((data) => data.createdAt.indexOf(name) != -1)
+              .reduce((sum, data) => sum + data.result.length, 0),
           },
         ]),
       [],
