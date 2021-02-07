@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { useSession } from 'next-auth/client';
 import { AppHead } from '@/components/atoms/AppHead';
 import { AppHeader } from '@/components/organisms/AppHeader';
+import { AppFooter } from '@/components/organisms/AppFooter';
 import { LoadingSpinner } from '@/components/atoms/LoadingSpinner';
 
 type Props = {
@@ -25,6 +26,7 @@ export const Layout = ({ isLoading = false, children }: Props) => {
         ) : (
           children
         )}
+        <AppFooter />
       </main>
     </div>
   );
