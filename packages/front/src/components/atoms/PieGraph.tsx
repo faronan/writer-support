@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const PieGraph = ({ data }: Props) => {
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8A2BE2'];
 
   const sum = data.reduce((sum, dict) => sum + dict.value, 0);
   const filterData = data.filter((dict) => dict.value / sum > 0.1);

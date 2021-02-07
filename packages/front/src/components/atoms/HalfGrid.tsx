@@ -6,7 +6,7 @@ type Props = {
 
 export const HalfGrid = ({ children }: Props) => {
   return (
-    <SimpleGrid columns={2} spacing={10}>
+    <SimpleGrid columns={2} spacing={10} paddingInline="3" marginLeft="0">
       {children}
     </SimpleGrid>
   );
