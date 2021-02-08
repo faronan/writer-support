@@ -9,7 +9,7 @@ export default function Check() {
   );
 
   return (
-    <Layout isLoading={mutationLoading}>
+    <Layout isLoading={mutationLoading} requiresAuth={true}>
       <ProofreadingComponent></ProofreadingComponent>
     </Layout>
   );

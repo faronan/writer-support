@@ -7,7 +7,7 @@ export default function Show() {
   const { loading: queryLoading } = useQuery(ProofreadingDataListDocument);
 
   return (
-    <Layout isLoading={queryLoading}>
+    <Layout isLoading={queryLoading} requiresAuth={true}>
       <DataListComponent></DataListComponent>
     </Layout>
   );

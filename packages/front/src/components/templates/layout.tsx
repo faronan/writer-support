@@ -4,13 +4,19 @@ import { AppHead } from '@/components/atoms/AppHead';
 import { AppHeader } from '@/components/organisms/AppHeader';
 import { AppFooter } from '@/components/organisms/AppFooter';
 import { LoadingSpinner } from '@/components/atoms/LoadingSpinner';
+import { LoginModal } from '@/components/molecules/LoginModal';
 
 type Props = {
   isLoading?: boolean;
+  requiresAuth?: boolean;
   children: ReactNode;
 };
 
-export const Layout = ({ isLoading = false, children }: Props) => {
+export const Layout = ({
+  isLoading = false,
+  requiresAuth = false,
+  children,
+}: Props) => {
   const [session, sessionLoading] = useSession();
   const TITLE = 'Writer Support';
   return (
@@ -23,10 +29,14 @@ export const Layout = ({ isLoading = false, children }: Props) => {
       <main>
         {isLoading || sessionLoading ? (
           <LoadingSpinner></LoadingSpinner>
+        ) : requiresAuth && session == null ? (
+          <LoginModal></LoginModal>
         ) : (
-          children
+          <>
+            {children}
+            <AppFooter />
+          </>
         )}
-        <AppFooter />
       </main>
     </div>
   );
