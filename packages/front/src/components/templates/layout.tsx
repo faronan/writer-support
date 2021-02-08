@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { useSession } from 'next-auth/client';
 import { AppHead } from '@/components/atoms/AppHead';
 import { AppHeader } from '@/components/organisms/AppHeader';
+import { AppFooter } from '@/components/organisms/AppFooter';
 import { LoadingSpinner } from '@/components/atoms/LoadingSpinner';
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
 
 export const Layout = ({ isLoading = false, children }: Props) => {
   const [session, sessionLoading] = useSession();
-  const TITLE = 'Write Support';
+  const TITLE = 'Writer Support';
   return (
     <div className="page">
       <AppHead title={TITLE}></AppHead>
@@ -25,6 +26,7 @@ export const Layout = ({ isLoading = false, children }: Props) => {
         ) : (
           children
         )}
+        <AppFooter />
       </main>
     </div>
   );

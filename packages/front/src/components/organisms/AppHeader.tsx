@@ -1,3 +1,4 @@
+import Router from 'next/router';
 import { Box, Heading, Flex } from '@chakra-ui/react';
 import { LinkText } from '@/components/atoms/LinkText';
 import { AuthComponent } from '@/components/molecules/AuthComponent';
@@ -11,7 +12,7 @@ export const AppHeader = ({ title, isLogin }: Props) => {
   return (
     <Flex wrap="wrap" padding="1.5rem" bg="teal.400" color="white">
       <Flex align="center" mr={5}>
-        <Heading as="h1" size="lg">
+        <Heading as="h1" size="lg" onClick={() => Router.push('/')}>
           {title}
         </Heading>
       </Flex>
