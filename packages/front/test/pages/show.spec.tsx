@@ -62,9 +62,9 @@ describe(`Show`, () => {
   it('should render DateFilterInput view', async () => {
     expect(await screen.findByText(/開始日/i)).toBeInTheDocument();
     expect(await screen.findByText(/終了日/i)).toBeInTheDocument();
-    expect(await screen.findByText(/対象のユーザー/i)).toBeInTheDocument();
+    expect(await screen.findByText(/ユーザーの絞り込み/i)).toBeInTheDocument();
     expect(
-      await screen.findByRole('combobox', { name: /対象のユーザー/i }),
+      await screen.findByRole('combobox', { name: /ユーザーの絞り込み/i }),
     ).toBeInTheDocument();
   });
 

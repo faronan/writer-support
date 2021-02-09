@@ -52,7 +52,9 @@ export const TopPage = () => {
           </ShortIntervalHStack>
           <ShortIntervalHStack>
             <Box width="50%" margin="3">
-              <ItalicHeadingText text={'文章の癖を分析'}></ItalicHeadingText>
+              <ItalicHeadingText
+                text={'癖を分析して文章力向上'}
+              ></ItalicHeadingText>
             </Box>
             <Box width="50%" margin="3">
               <Image src="/description_3.png" width={720} height={400} />
@@ -64,7 +66,7 @@ export const TopPage = () => {
             </Box>
             <Box width="50%" margin="3">
               <ItalicHeadingText
-                text={'文章作成の補助機能も'}
+                text={'文章作成の補助機能も用意'}
               ></ItalicHeadingText>
             </Box>
           </ShortIntervalHStack>

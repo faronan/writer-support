@@ -48,7 +48,7 @@ export const DateFilterInputForm = ({
         </FormControl>
       </ShortIntervalHStack>
       <FormControl mt={5}>
-        <FormLabel>対象のユーザー</FormLabel>
+        <FormLabel>ユーザーの絞り込み</FormLabel>
         <Select
           value={selectedUser}
           onChange={selectOnChange}

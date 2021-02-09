@@ -74,9 +74,9 @@ export const ProofreadingInputForm = ({
       )}
       <Tabs mt={10} minH="xs" variant="enclosed">
         <TabList>
-          <Tab>基本ルール</Tab>
-          <Tab>チェック項目</Tab>
-          <Tab>品質向上</Tab>
+          <Tab>表記ルール</Tab>
+          <Tab>typoチェック</Tab>
+          <Tab>文法チェック</Tab>
         </TabList>
         <TabPanels>
           {ruleNames.map((names, index) => (
