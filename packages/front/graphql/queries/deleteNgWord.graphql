@@ -1,0 +1,5 @@
+mutation deleteNgWord($wordInput: AddUserWordInput!) {
+  deleteNgWord(wordInput: $wordInput) {
+    wordText
+  }
+}

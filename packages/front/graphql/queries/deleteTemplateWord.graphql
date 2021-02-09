@@ -1,0 +1,5 @@
+mutation deleteTemplateWord($wordInput: AddUserWordInput!) {
+  deleteTemplateWord(wordInput: $wordInput) {
+    wordText
+  }
+}

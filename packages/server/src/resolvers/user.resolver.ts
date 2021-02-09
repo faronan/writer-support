@@ -36,4 +36,20 @@ export class UserResolver {
       wordInput.wordText,
     );
   }
+
+  @Mutation((returns) => Word)
+  async deleteNgWord(@Args('wordInput') wordInput: AddUserWordInput) {
+    return await this.userService.deleteNgWord(
+      wordInput.userEmail,
+      wordInput.wordText,
+    );
+  }
+
+  @Mutation((returns) => Word)
+  async deleteTemplateWord(@Args('wordInput') wordInput: AddUserWordInput) {
+    return await this.userService.deleteTemplateWord(
+      wordInput.userEmail,
+      wordInput.wordText,
+    );
+  }
 }
