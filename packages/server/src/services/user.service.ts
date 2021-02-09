@@ -56,4 +56,30 @@ export class UserService {
     });
     return templateWord;
   }
+
+  async deleteNgWord(userEmail: string, wordText: string) {
+    const user = await this.findByEmail(userEmail);
+    const ngWord = await this.prismaService.ngWord.delete({
+      where: {
+        userNgWord: {
+          wordText: wordText,
+          userId: user.id,
+        },
+      },
+    });
+    return ngWord;
+  }
+
+  async deleteTemplateWord(userEmail: string, wordText: string) {
+    const user = await this.findByEmail(userEmail);
+    const templateWord = await this.prismaService.templateWord.delete({
+      where: {
+        userTemplateWord: {
+          wordText: wordText,
+          userId: user.id,
+        },
+      },
+    });
+    return templateWord;
+  }
 }

@@ -53,6 +53,8 @@ type Mutation {
   createUser(userInput: AddUserInput!): User!
   createNgWord(wordInput: AddUserWordInput!): Word!
   createTemplateWord(wordInput: AddUserWordInput!): Word!
+  deleteNgWord(wordInput: AddUserWordInput!): Word!
+  deleteTemplateWord(wordInput: AddUserWordInput!): Word!
 }
 
 input AddProofreadingDataInput {

@@ -8,6 +8,7 @@ import {
   InputRightElement,
   Button,
   Text,
+  CloseButton,
   useClipboard,
   useToast,
 } from '@chakra-ui/react';
@@ -22,6 +23,7 @@ type Props = {
     __typename?: 'Word';
   } & Pick<Word, 'wordText'>[];
   createWord: (word) => void;
+  deleteWord: (word) => void;
   wordType: wordType;
   description: string;
 };
@@ -29,6 +31,7 @@ type Props = {
 export const UserWords = ({
   words,
   createWord,
+  deleteWord,
   wordType,
   description,
 }: Props) => {
@@ -94,11 +97,19 @@ export const UserWords = ({
               <Text onClick={() => onCopyWordClick(word.wordText)}>
                 {word.wordText}
               </Text>
+              <CloseButton
+                size="sm"
+                onClick={() => deleteWord(word.wordText)}
+              />
             </>
           ) : (
             <>
               <ListIcon as={WarningTwoIcon} color="yellow.500" />
               <Text>{word.wordText}</Text>
+              <CloseButton
+                size="sm"
+                onClick={() => deleteWord(word.wordText)}
+              />
             </>
           )}
         </ListItem>

@@ -10,6 +10,8 @@ import {
   CreateUserDocument,
   CreateNgWordDocument,
   CreateTemplateWordDocument,
+  DeleteNgWordDocument,
+  DeleteTemplateWordDocument,
   Word,
 } from '@graphql/graphql-operations';
 import { HalfGrid } from '@/components/atoms/HalfGrid';
@@ -28,9 +30,7 @@ import {
   CHECK_RULES,
   QUALITY_RULES,
 } from '@/lib/RuleNameData';
-import {
-  SAMPLE_TEXT
-} from '@/lib/SampleTextData';
+import { SAMPLE_TEXT } from '@/lib/SampleTextData';
 
 export const ProofreadingComponent = () => {
   const [text, setText] = useState('');
@@ -45,6 +45,9 @@ export const ProofreadingComponent = () => {
   const [createUser] = useMutation(CreateUserDocument);
   const [createNgWord] = useMutation(CreateNgWordDocument);
   const [createTemplateWord] = useMutation(CreateTemplateWordDocument);
+
+  const [deleteNgWord] = useMutation(DeleteNgWordDocument);
+  const [deleteTemplateWord] = useMutation(DeleteTemplateWordDocument);
 
   useEffect(() => {
     if (userFindQueryLoading) {
@@ -127,7 +130,7 @@ export const ProofreadingComponent = () => {
             .some((bool) => bool);
           setIsNgAlertShow(isIncludeNgWord);
         }}
-        inputSampleText={()=>{
+        inputSampleText={() => {
           setText(SAMPLE_TEXT);
         }}
         submitButtonOnClick={proofreadingButtonOnClick}
@@ -173,6 +176,21 @@ export const ProofreadingComponent = () => {
               });
               setTemplateWords(templateWords.concat([{ wordText: word }]));
             }}
+            deleteWord={(word) => {
+              deleteTemplateWord({
+                variables: {
+                  wordInput: {
+                    wordText: word,
+                    userEmail: session.user.email,
+                  },
+                },
+              });
+              setTemplateWords(
+                templateWords.filter(
+                  (templateWord) => templateWord.wordText !== word,
+                ),
+              );
+            }}
             wordType={'template'}
             description={'使用頻度の高いワードを登録してください'}
           ></UserWords>
@@ -190,6 +208,17 @@ export const ProofreadingComponent = () => {
                 },
               });
               setNgWords(ngWords.concat([{ wordText: word }]));
+            }}
+            deleteWord={(word) => {
+              deleteNgWord({
+                variables: {
+                  wordInput: {
+                    wordText: word,
+                    userEmail: session.user.email,
+                  },
+                },
+              });
+              setNgWords(ngWords.filter((ngWord) => ngWord.wordText !== word));
             }}
             wordType={'ng'}
             description={'文章に含めたくないワードを登録してください'}
