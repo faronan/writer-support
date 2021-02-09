@@ -11,6 +11,18 @@ describe(`Home`, () => {
     expect(screen.getByText(/Loading/)).toBeInTheDocument();
   });
 
+  it('should render common view', async () => {
+    client['useSession'] = jest.fn().mockReturnValue([null, false]);
+    renderWithRouter(<Home />);
+
+    expect(
+      screen.getByRole('heading', { name: /writer support/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/© 2021 writer support/i)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /twitter/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /github/i })).toBeInTheDocument();
+  });
+
   it('should render signin view', async () => {
     client['useSession'] = jest.fn().mockReturnValue([null, false]);
     renderWithRouter(<Home />);
@@ -26,7 +38,12 @@ describe(`Home`, () => {
     auth();
     renderWithRouter(<Home />);
 
-    //TODO: 他のヘッダーの表示 + ログアウト押した後の遷移もテスト
+    expect(
+      screen.getByRole('link', { name: /文章をチェック🗒/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /文章の癖を分析👀/i }),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole('button', {
         name: /ログアウト/i,
