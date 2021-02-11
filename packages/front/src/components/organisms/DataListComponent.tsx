@@ -7,6 +7,7 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
+  Box,
 } from '@chakra-ui/react';
 import { HalfGrid } from '@/components/atoms/HalfGrid';
 import { ShortIntervalStack } from '@/components/atoms/ShortIntervalStack';
@@ -172,7 +173,10 @@ export const DataListComponent = () => {
               </Accordion>
             </>
           ) : (
-            <InfoAlert text="該当のデータはありません"></InfoAlert>
+            //ヘッターまでの画面サイズを確保
+            <Box minH="lg">
+              <InfoAlert text="該当のデータはありません"></InfoAlert>
+            </Box>
           )}
         </ShortIntervalStack>
         {ruleUsedCountList.length > 0 && (
