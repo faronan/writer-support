@@ -7,6 +7,7 @@ const options = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
+    //ゲストログイン機能のために、無条件で認証を通す
     Providers.Credentials({
       name: 'Credential',
       async authorize() {

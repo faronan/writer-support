@@ -18,6 +18,7 @@ export class UserService {
     return user;
   }
 
+  //idだけを取得するときにngWordsとtemplateWordsをincludeするのは無駄なReadが触れるので、関数を分ける
   async findIdByEmail(userEmail: string) {
     const user = await this.prismaService.user.findUnique({
       where: {

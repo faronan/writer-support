@@ -5,6 +5,8 @@ import { PrismaService } from '@/services/prisma.service';
 import { ProofreadingDataService } from '@/services/proofreadingData.service';
 
 describe('ProofreadingDataService', () => {
+  //letは使いたくないが、ドキュメントの記載に従う
+  //ref. https://docs.nestjs.com/fundamentals/testing
   let proofreadingDataService: ProofreadingDataService;
   let prismaService: PrismaService;
   let userService: UserService;
