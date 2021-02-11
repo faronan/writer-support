@@ -18,6 +18,15 @@ export class UserService {
     return user;
   }
 
+  async findIdByEmail(userEmail: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+    });
+    return user.id;
+  }
+
   async create(userEmail: string, userName: string) {
     const user = await this.prismaService.user.create({
       data: {
@@ -58,12 +67,12 @@ export class UserService {
   }
 
   async deleteNgWord(userEmail: string, wordText: string) {
-    const user = await this.findByEmail(userEmail);
+    const userId = await this.findIdByEmail(userEmail);
     const ngWord = await this.prismaService.ngWord.delete({
       where: {
         userNgWord: {
           wordText: wordText,
-          userId: user.id,
+          userId: userId,
         },
       },
     });
@@ -71,12 +80,12 @@ export class UserService {
   }
 
   async deleteTemplateWord(userEmail: string, wordText: string) {
-    const user = await this.findByEmail(userEmail);
+    const userId = await this.findIdByEmail(userEmail);
     const templateWord = await this.prismaService.templateWord.delete({
       where: {
         userTemplateWord: {
           wordText: wordText,
-          userId: user.id,
+          userId: userId,
         },
       },
     });
