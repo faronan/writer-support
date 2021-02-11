@@ -19,14 +19,18 @@ export const AuthComponent = ({ isLogin }: Props) => {
       <TransparentBolderButton
         onClick={async (e) => {
           e.preventDefault();
-          await signIn('google');
+          await signIn('google', {
+            callbackUrl: `${process.env.BASE_URL}/check`,
+          });
         }}
         text={'ログイン'}
       ></TransparentBolderButton>
       <TransparentBolderButton
         onClick={async (e) => {
           e.preventDefault();
-          await signIn('credentials');
+          await signIn('credentials', {
+            callbackUrl: `${process.env.BASE_URL}/check`,
+          });
         }}
         text={'ゲストログイン'}
       ></TransparentBolderButton>
