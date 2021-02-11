@@ -30,6 +30,7 @@ export const Layout = ({
         {isLoading || sessionLoading ? (
           <LoadingSpinner></LoadingSpinner>
         ) : requiresAuth && session == null ? (
+          // 認証が必要なページにログインなしでアクセスした時は、モーダルを出してリダイレクトする
           <LoginModal></LoginModal>
         ) : (
           <>

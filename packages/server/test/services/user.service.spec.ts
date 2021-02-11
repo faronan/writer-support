@@ -14,9 +14,13 @@ describe('UserService', () => {
     prismaService = moduleRef.get<PrismaService>(PrismaService);
   });
 
+  const testEmail = 'test@test.com';
+  const testName = 'testName';
+  const testWordText = 'testWordText';
+  const testUserId = 1;
+
   describe('findByEmail', () => {
     it('should call prisma user findUnique', async () => {
-      const testEmail = 'test@test.com';
       const expectedArg = {
         where: {
           email: testEmail,
@@ -37,9 +41,6 @@ describe('UserService', () => {
 
   describe('create', () => {
     it('should call prisma user create', async () => {
-      const testEmail = 'test@test.com';
-      const testName = 'testName';
-
       const expectedArg = {
         data: {
           email: testEmail,
@@ -58,7 +59,6 @@ describe('UserService', () => {
 
   describe('createPrismaDict', () => {
     it('should return formatted dict for prisma', () => {
-      const testEmail = 'test@test.com';
       const expected = {
         connect: {
           email: testEmail,
@@ -72,9 +72,6 @@ describe('UserService', () => {
 
   describe('createNgWord', () => {
     it('should call prisma ngWord create', async () => {
-      const testEmail = 'test@test.com';
-      const testWordText = 'testName';
-
       const testReturnUsers = {
         connect: {
           email: testEmail,
@@ -100,9 +97,6 @@ describe('UserService', () => {
 
   describe('createTemplateWord', () => {
     it('should call prisma templateWord create', async () => {
-      const testEmail = 'test@test.com';
-      const testWordText = 'testName';
-
       const testReturnUsers = {
         connect: {
           email: testEmail,
@@ -123,6 +117,46 @@ describe('UserService', () => {
       await userService.createTemplateWord(testEmail, testWordText);
       expect(prismaCreateMock).toHaveBeenCalled();
       expect(prismaCreateMock.mock.calls[0][0]).toEqual(expectedArg);
+    });
+  });
+
+  describe('deleteNgWord', () => {
+    it('should call prisma ngWord delete', async () => {
+      const expectedArg = {
+        where: { userNgWord: { userId: testUserId, wordText: testWordText } },
+      };
+
+      const prismaDeleteMock = jest.fn();
+      prismaService.ngWord['delete'] = prismaDeleteMock;
+      const prismaFindUniqueMock = jest.fn(() => Promise.resolve(testUserId));
+      userService['findIdByEmail'] = prismaFindUniqueMock;
+
+      await userService.deleteNgWord(testEmail, testWordText);
+      expect(prismaDeleteMock).toHaveBeenCalled();
+      expect(prismaDeleteMock.mock.calls[0][0]).toEqual(expectedArg);
+
+      expect(prismaFindUniqueMock).toHaveBeenCalled();
+    });
+  });
+
+  describe('deleteTemplateWord', () => {
+    it('should call prisma templateWord delete', async () => {
+      const expectedArg = {
+        where: {
+          userTemplateWord: { userId: testUserId, wordText: testWordText },
+        },
+      };
+
+      const prismaDeleteMock = jest.fn();
+      prismaService.templateWord['delete'] = prismaDeleteMock;
+      const prismaFindUniqueMock = jest.fn(() => Promise.resolve(testUserId));
+      userService['findIdByEmail'] = prismaFindUniqueMock;
+
+      await userService.deleteTemplateWord(testEmail, testWordText);
+      expect(prismaDeleteMock).toHaveBeenCalled();
+      expect(prismaDeleteMock.mock.calls[0][0]).toEqual(expectedArg);
+
+      expect(prismaFindUniqueMock).toHaveBeenCalled();
     });
   });
 });

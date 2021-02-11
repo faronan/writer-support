@@ -20,6 +20,8 @@ export class LintResultService {
     return messages;
   }
 
+  //Prismaに渡すパタメータの作成
+  //executeの結果を加工するので、LintResultServiceの責務
   createPrismaDict(lintMessages: TextlintMessage[]) {
     const dict = {
       create: lintMessages.reduce(

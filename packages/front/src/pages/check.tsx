@@ -10,6 +10,7 @@ import { Layout } from '@/components/templates/layout';
 import { ProofreadingComponent } from '@/components/organisms/ProofreadingComponent';
 
 export default function Check() {
+  //QueryのLoadingは親コンポーネントで一括管理
   const [, { loading: createProofreadingLoading }] = useMutation(
     CreateProofreadingDocument,
   );

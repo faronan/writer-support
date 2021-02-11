@@ -85,7 +85,9 @@ export const TopPage = () => {
               <BlackButton
                 onClick={async (e) => {
                   e.preventDefault();
-                  await signIn('credentials');
+                  await signIn('credentials', {
+                    callbackUrl: `${process.env.BASE_URL}/check`,
+                  });
                 }}
                 text={'使ってみる'}
               ></BlackButton>
