@@ -14,6 +14,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "prisma:generate": "prisma generate",
+    "prisma:db:push": "prisma db push --preview-feature",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

@@ -1,2 +1,3 @@
-npx prisma db push --preview-feature
+npm run prisma:generate
+npm run prisma:db:push
 npm run dev
