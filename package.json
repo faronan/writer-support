@@ -4,15 +4,20 @@
   "description": "",
   "scripts": {
     "ci": "lerna exec npm ci",
+    "install": "lerna exec npm install",
     "build": "lerna run build --stream",
     "build:server": "lerna run build --scope=server --stream",
+    "build:front": "lerna run build --scope=front --stream",
     "dev": "lerna run dev --stream",
     "dev:server": "lerna run dev --scope=server --stream",
+    "dev:front": "lerna run dev --scope=front --stream",
     "start": "lerna run start --stream",
     "start:server": "lerna run start --scope=server --stream",
+    "start:front": "lerna run start --scope=front --stream",
     "lint": "eslint --ext .ts,.tsx",
     "test": "lerna run test --stream",
-    "test:server": "lerna run test --scope=server --stream"
+    "test:server": "lerna run test --scope=server --stream",
+    "test:front": "lerna run test --scope=front --stream"
   },
   "dependencies": {
     "lerna": "^3.22.1"
