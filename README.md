@@ -1,6 +1,8 @@
 # Writer Support
 
-![ci-master](https://github.com/faronan/writer-support/workflows/CI/badge.svg)
+![ci-main](https://github.com/faronan/writer-support/workflows/CI/badge.svg)
+
+![license](https://img.shields.io/github/license/faronan/writer-support)
 
 ## 概要
 
