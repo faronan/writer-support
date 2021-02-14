@@ -3,7 +3,7 @@ services:
   front:
     build:
       context: .
-      dockerfile: docker/Dockerfile.front
+      dockerfile: docker/Dockerfile.front.dev
     volumes:
       - ./:/usr/app
     working_dir: '/usr/app/packages/front'
@@ -14,11 +14,11 @@ services:
   server:
     build:
       context: .
-      dockerfile: docker/Dockerfile.server
+      dockerfile: docker/Dockerfile.server.dev
     volumes:
       - ./:/usr/app
     working_dir: '/usr/app/packages/server'
-    command: 'sh ../../docker/start.sh'
+    command: 'sh ../../docker/start.dev.sh'
     ports:
       - '5555:5555'
       - '8080:8080'
