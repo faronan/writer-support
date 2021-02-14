@@ -1,6 +1,8 @@
 # Writer Support
 
-![ci-master](https://github.com/faronan/writer-support/workflows/CI/badge.svg)
+![ci-main](https://github.com/faronan/writer-support/workflows/CI/badge.svg)
+
+![license](https://img.shields.io/github/license/faronan/writer-support)
 
 ## 概要
 
@@ -24,11 +26,11 @@ URL: https://writer-support.vercel.app
   <summary>画面詳細</summary>
   <h3>校正機能<h3>
 
-![校正機能](https://user-images.githubusercontent.com/40588536/107871709-522b4400-6ee7-11eb-8dcb-acc26079387d.png '校正機能')
+![校正機能](https://user-images.githubusercontent.com/40588536/107892237-22bc1c00-6f67-11eb-9ca6-6b0010ea7eb4.gif '校正機能')
 
 <h3>分析機能<h3>　　
 
-![分析機能](https://user-images.githubusercontent.com/40588536/107871640-d7fabf80-6ee6-11eb-906a-769290ec4ec7.png '分析機能')
+![分析機能](https://user-images.githubusercontent.com/40588536/107892329-b68de800-6f67-11eb-9de6-1c0dd3a29bfe.png '分析機能')
 
 </details>
 
